@@ -5,7 +5,7 @@ Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,10 @@ Características principales:
 5. Ve a **WooCommerce > Coco COD** para configurar y gestionar actualizaciones.
 
 == Changelog ==
+
+= 1.2.1 =
+* Botón de confirmación simplificado a "CONFIRMAR PEDIDO" sin mostrar monto repetido.
+* Solucionado el error "Código postal / ZIP es un campo requerido" haciendo el código postal opcional en Paraguay y suministrando un valor por defecto seguro en el proceso de checkout modal.
 
 = 1.2.0 =
 * Nuevo: Pestaña "Actualizaciones (GitHub)" en WooCommerce > Coco COD. Permite comprobar si hay una nueva versión en tu repositorio y actualizarla directamente con 1 solo clic sin tener que descargar ni volver a subir el archivo ZIP.

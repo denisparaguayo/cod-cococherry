@@ -206,8 +206,7 @@
 						$('#coco-final-shipping').html(res.data.formatted_shipping);
 						$('#coco-final-total').html(res.data.formatted_total);
 
-						var labelPrice = res.data.plain_total ? res.data.plain_total : (res.data.total ? res.data.total + ' ' + cocoCodParams.currencySymbol : '');
-						$('#coco-btn-submit-order .coco-submit-label').text(cocoCodParams.i18n.confirmOrder + (labelPrice ? ' — ' + labelPrice : ''));
+						$('#coco-btn-submit-order .coco-submit-label').text(cocoCodParams.i18n.confirmOrder);
 					} else {
 						$('#coco-live-shipping').text('No se pudo calcular');
 					}

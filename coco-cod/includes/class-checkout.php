@@ -11,6 +11,8 @@ class Checkout {
 	public function __construct() {
 		// Ajuste de campos de dirección
 		add_filter( 'woocommerce_default_address_fields', array( $this, 'customize_address_fields' ) );
+		add_filter( 'woocommerce_billing_fields', array( $this, 'customize_billing_fields' ) );
+		add_filter( 'woocommerce_shipping_fields', array( $this, 'customize_shipping_fields' ) );
 
 		// Script para recálculo por ciudad en checkout clásico
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_checkout_scripts' ) );
@@ -38,6 +40,31 @@ class Checkout {
 			$fields['state']['label'] = __( 'Departamento', 'coco-cod' );
 		}
 
+		// En Paraguay los códigos postales no son obligatorios para entregas
+		if ( isset( $fields['postcode'] ) ) {
+			$fields['postcode']['required'] = false;
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Asegura que el código postal de facturación no sea obligatorio.
+	 */
+	public function customize_billing_fields( $fields ) {
+		if ( isset( $fields['billing_postcode'] ) ) {
+			$fields['billing_postcode']['required'] = false;
+		}
+		return $fields;
+	}
+
+	/**
+	 * Asegura que el código postal de envío no sea obligatorio.
+	 */
+	public function customize_shipping_fields( $fields ) {
+		if ( isset( $fields['shipping_postcode'] ) ) {
+			$fields['shipping_postcode']['required'] = false;
+		}
 		return $fields;
 	}
 

@@ -164,6 +164,7 @@ class Ajax {
 		}
 
 		// Asignar datos del cliente
+		$postcode = '0000';
 		WC()->customer->set_billing_first_name( $first_name );
 		WC()->customer->set_billing_last_name( $last_name );
 		WC()->customer->set_billing_phone( $phone );
@@ -171,6 +172,7 @@ class Ajax {
 		WC()->customer->set_billing_country( 'PY' );
 		WC()->customer->set_billing_state( $state );
 		WC()->customer->set_billing_city( $city );
+		WC()->customer->set_billing_postcode( $postcode );
 		WC()->customer->set_billing_address_1( $address_1 );
 		WC()->customer->set_billing_address_2( $address_2 );
 
@@ -180,6 +182,7 @@ class Ajax {
 		WC()->customer->set_shipping_country( 'PY' );
 		WC()->customer->set_shipping_state( $state );
 		WC()->customer->set_shipping_city( $city );
+		WC()->customer->set_shipping_postcode( $postcode );
 		WC()->customer->set_shipping_address_1( $address_1 );
 		WC()->customer->set_shipping_address_2( $address_2 );
 		WC()->customer->save();
@@ -214,8 +217,20 @@ class Ajax {
 		$_POST['billing_country']                   = 'PY';
 		$_POST['billing_state']                     = $state;
 		$_POST['billing_city']                      = $city;
+		$_POST['billing_postcode']                  = $postcode;
 		$_POST['billing_address_1']                 = $address_1;
 		$_POST['billing_address_2']                 = $address_2;
+
+		$_POST['shipping_first_name']               = $first_name;
+		$_POST['shipping_last_name']                = $last_name;
+		$_POST['shipping_phone']                    = $phone;
+		$_POST['shipping_country']                  = 'PY';
+		$_POST['shipping_state']                    = $state;
+		$_POST['shipping_city']                     = $city;
+		$_POST['shipping_postcode']                 = $postcode;
+		$_POST['shipping_address_1']                = $address_1;
+		$_POST['shipping_address_2']                = $address_2;
+
 		$_POST['ship_to_different_address']         = 0;
 		$_POST['shipping_method']                   = array( $chosen_method );
 		$_POST['coco_cod_order_source']             = 'modal';
@@ -223,6 +238,17 @@ class Ajax {
 		$_POST['_wpnonce']                          = $wc_nonce;
 		$_POST['terms']                             = 1;
 		$_POST['terms-field']                       = 1;
+
+		// Evitar que WooCommerce exija código postal durante el checkout modal
+		add_filter( 'woocommerce_checkout_fields', function ( $fields ) {
+			if ( isset( $fields['billing']['billing_postcode'] ) ) {
+				$fields['billing']['billing_postcode']['required'] = false;
+			}
+			if ( isset( $fields['shipping']['shipping_postcode'] ) ) {
+				$fields['shipping']['shipping_postcode']['required'] = false;
+			}
+			return $fields;
+		}, 9999 );
 
 		// IMPORTANTE: WC_Checkout lee los nonces de $_REQUEST, que en PHP no se actualiza solo con $_POST
 		foreach ( $_POST as $key => $val ) {
