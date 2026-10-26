@@ -4,8 +4,9 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Plantilla del botón "Pagar al recibir" en la ficha de producto.
  */
+$layout_class = ( isset( $btn_layout ) && 'full' === $btn_layout ) ? 'coco-layout-full' : 'coco-layout-inline';
 ?>
-<div class="coco-cod-btn-wrapper">
+<div class="coco-cod-btn-wrapper <?php echo esc_attr( $layout_class ); ?>">
 	<button type="button" id="coco-cod-open-modal" class="coco-cod-button" aria-haspopup="dialog" aria-controls="coco-cod-modal">
 		<span class="coco-cod-btn-icon">
 			<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

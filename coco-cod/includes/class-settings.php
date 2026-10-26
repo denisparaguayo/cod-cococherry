@@ -202,6 +202,9 @@ class Settings {
 			if ( isset( $_POST['btn_radius'] ) ) {
 				$current['btn_radius'] = sanitize_text_field( wp_unslash( $_POST['btn_radius'] ) );
 			}
+			if ( isset( $_POST['btn_layout'] ) ) {
+				$current['btn_layout'] = sanitize_key( $_POST['btn_layout'] );
+			}
 
 		} elseif ( 'shipping' === $tab ) {
 			// Procesar únicamente la pestaña Tarifas de Envío
@@ -452,6 +455,22 @@ class Settings {
 										<option value="14px" <?php selected( $settings->get_setting( 'btn_radius', '8px' ), '14px' ); ?>><?php esc_html_e( 'Redondeado (14px)', 'coco-cod' ); ?></option>
 										<option value="9999px" <?php selected( $settings->get_setting( 'btn_radius', '8px' ), '9999px' ); ?>><?php esc_html_e( 'Estilo Píldora (Redondo)', 'coco-cod' ); ?></option>
 									</select>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Posición / Disposición', 'coco-cod' ); ?></th>
+								<td>
+									<select id="btn_layout" name="btn_layout">
+										<option value="inline" <?php selected( $settings->get_setting( 'btn_layout', 'inline' ), 'inline' ); ?>>
+											<?php esc_html_e( 'Al lado de la cantidad (Como botón original de WooCommerce)', 'coco-cod' ); ?>
+										</option>
+										<option value="full" <?php selected( $settings->get_setting( 'btn_layout', 'inline' ), 'full' ); ?>>
+											<?php esc_html_e( 'Ancho completo debajo de la cantidad', 'coco-cod' ); ?>
+										</option>
+									</select>
+									<p class="description">
+										<?php esc_html_e( 'Define si el botón ocupa el lugar original junto al selector de cantidad o si va debajo en ancho completo.', 'coco-cod' ); ?>
+									</p>
 								</td>
 							</tr>
 							<tr>

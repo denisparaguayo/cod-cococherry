@@ -90,6 +90,7 @@ register_activation_hook( __FILE__, function () {
 			'btn_hover_bg'     => '#15803d',
 			'btn_hover_text'   => '#ffffff',
 			'btn_radius'       => '8px',
+			'btn_layout'       => 'inline',
 			'shipping_central' => '35000',
 			'shipping_interior'=> '45000',
 			'city_rates'       => array(

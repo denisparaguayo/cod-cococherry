@@ -166,6 +166,7 @@ class Frontend {
 
 		$btn_text     = $plugin->get_setting( 'btn_text', 'Pagar al recibir en casa' );
 		$btn_subtitle = $plugin->get_setting( 'btn_subtitle', 'Envío rápido · Pago en efectivo' );
+		$btn_layout   = $plugin->get_setting( 'btn_layout', 'inline' );
 
 		include COCO_COD_PATH . 'templates/button.php';
 	}

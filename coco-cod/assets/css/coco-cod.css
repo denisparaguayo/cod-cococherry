@@ -4,10 +4,37 @@
 
 /* Botón en la ficha de producto */
 .coco-cod-btn-wrapper {
-	margin: 14px 0 18px 0;
-	width: 100%;
+	display: inline-flex;
+	flex: 1 1 auto;
+	width: auto;
+	margin: 0;
+	clear: none;
+	vertical-align: middle;
+}
+
+/* Modo Ancho Completo (opcional desde ajustes) */
+.coco-cod-btn-wrapper.coco-layout-full {
 	display: block;
+	width: 100%;
+	flex: 1 1 100%;
+	margin: 14px 0 18px 0;
 	clear: both;
+}
+
+/* Integración y alineación con el formulario de WooCommerce */
+.woocommerce div.product form.cart:not(.grouped_form),
+.woocommerce div.product .woocommerce-variation-add-to-cart {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.woocommerce div.product form.cart .quantity,
+.woocommerce div.product .woocommerce-variation-add-to-cart .quantity {
+	margin-right: 0 !important;
+	margin-bottom: 0 !important;
+	float: none !important;
 }
 
 .coco-cod-button {
@@ -15,8 +42,8 @@
 	align-items: center;
 	justify-content: center;
 	width: 100%;
-	min-height: 54px;
-	padding: 12px 20px;
+	min-height: 48px;
+	padding: 10px 18px;
 	background-color: var(--coco-btn-bg, #16a34a);
 	color: var(--coco-btn-color, #ffffff) !important;
 	border: none;
@@ -26,6 +53,7 @@
 	transition: all 0.2s ease-in-out;
 	text-decoration: none;
 	box-sizing: border-box;
+	line-height: 1.25;
 }
 
 .coco-cod-button:hover,
@@ -39,18 +67,18 @@
 .coco-cod-btn-icon {
 	display: inline-flex;
 	align-items: center;
-	margin-right: 12px;
+	margin-right: 10px;
 	flex-shrink: 0;
 }
 
 .coco-cod-btn-content {
 	display: flex;
 	flex-direction: column;
-	text-align: left;
+	text-align: center;
 }
 
 .coco-cod-btn-title {
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 700;
 	line-height: 1.25;
 }
@@ -60,6 +88,23 @@
 	font-weight: 400;
 	opacity: 0.9;
 	margin-top: 2px;
+}
+
+@media (max-width: 480px) {
+	.coco-cod-button {
+		padding: 10px 12px;
+		min-height: 44px;
+	}
+	.coco-cod-btn-title {
+		font-size: 13.5px;
+	}
+	.coco-cod-btn-icon {
+		margin-right: 6px;
+	}
+	.coco-cod-btn-icon svg {
+		width: 18px;
+		height: 18px;
+	}
 }
 
 /* Modal y Backdrop */
