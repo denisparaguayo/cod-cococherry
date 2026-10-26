@@ -141,7 +141,7 @@ class Checkout {
 
 		if ( $has_dropi && $has_own ) {
 			wc_add_notice(
-				__( 'Por razones logísticas de contra entrega, no es posible combinar productos de Stock Propio con productos de Dropi en un mismo pedido. Por favor realiza dos pedidos por separado.', 'coco-cod' ),
+				__( 'Por razones logísticas de contra entrega, no es posible combinar estos productos en un mismo pedido. Por favor realiza dos pedidos por separado.', 'coco-cod' ),
 				'error'
 			);
 		}

@@ -50,6 +50,10 @@ class Frontend {
 
 		// Encolar estilos en la página de agradecimiento / confirmación
 		if ( is_order_received_page() ) {
+			if ( 'yes' === $plugin->get_setting( 'custom_thankyou', 'yes' ) ) {
+				remove_action( 'woocommerce_thankyou', 'woocommerce_order_details_table', 10 );
+			}
+
 			wp_enqueue_style(
 				'coco-cod-css',
 				COCO_COD_URL . 'assets/css/coco-cod.css',
@@ -141,7 +145,7 @@ class Frontend {
 				'invalidEmail'    => __( 'Por favor ingresa un correo electrónico válido.', 'coco-cod' ),
 				'invalidPhone'    => __( 'Por favor ingresa un número de celular válido de Paraguay.', 'coco-cod' ),
 				'calcShipping'    => __( 'Calculando envío...', 'coco-cod' ),
-				'freeShipping'    => __( 'Envío Gratis (Dropi)', 'coco-cod' ),
+				'freeShipping'    => __( 'Envío Gratis', 'coco-cod' ),
 				'processingOrder' => __( 'Procesando tu pedido...', 'coco-cod' ),
 				'confirmOrder'    => __( 'Confirmar pedido', 'coco-cod' ),
 				'errorOrder'      => __( 'Hubo un error al procesar tu pedido. Por favor intenta de nuevo.', 'coco-cod' ),

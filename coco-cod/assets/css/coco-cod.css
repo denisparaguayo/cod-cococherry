@@ -1171,3 +1171,19 @@
 	margin: 0;
 }
 
+/* ==========================================================================
+   OCULTAR TABLAS CRUDAS DE WOOCOMMERCE EN LA PANTALLA DE AGRADECIMIENTO
+   ========================================================================== */
+body.woocommerce-order-received .woocommerce-order-details,
+body.woocommerce-order-received .woocommerce-customer-details,
+body.woocommerce-order-received .woocommerce-bacs-bank-details,
+body.woocommerce-order-received .woocommerce-order-downloads,
+body.woocommerce-order-received > .woocommerce > p:first-of-type,
+.coco-thankyou-wrapper ~ .woocommerce-order-details,
+.coco-thankyou-wrapper ~ .woocommerce-customer-details,
+.coco-thankyou-wrapper ~ p,
+.coco-thankyou-wrapper ~ h2 {
+	display: none !important;
+}
+
+

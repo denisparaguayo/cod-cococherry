@@ -132,7 +132,7 @@ class Ajax {
 
 		// Validar que Dropi no se envíe a Alto Paraguay (16)
 		if ( '16' === $state && $plugin->is_dropi_product( $product ) ) {
-			wp_send_json_error( array( 'message' => __( 'Dropi no cuenta con cobertura de entrega en el departamento de Alto Paraguay.', 'coco-cod' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Lo sentimos, este producto no cuenta con cobertura de entrega en el departamento de Alto Paraguay.', 'coco-cod' ) ) );
 		}
 
 		// 7. Preparación de sesión y carrito en WooCommerce

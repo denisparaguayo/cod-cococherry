@@ -5,7 +5,7 @@ Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,11 @@ Características principales:
 5. Ve a **WooCommerce > Coco COD** para configurar y gestionar actualizaciones.
 
 == Changelog ==
+
+= 1.4.2 =
+* Eliminada por completo la mención a "Dropi" de cara al cliente: ahora se muestra como "Envío Gratis" en el modal, checkout y resumen de compra.
+* Filtro de sanitización retroactiva en nombres de métodos de envío para pedidos nuevos y anteriores.
+* Eliminadas las tablas visuales redundantes de WooCommerce que aparecían duplicadas debajo de la tarjeta moderna de agradecimiento.
 
 = 1.4.1 =
 * Corregido el guardado de ajustes por pestaña en el panel de administración: ahora guardar las tarifas de envío no desactiva la pestaña General ni borra las ciudades personalizadas al guardar otras pestañas.

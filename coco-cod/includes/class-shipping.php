@@ -10,6 +10,28 @@ class Shipping {
 
 	public function __construct() {
 		add_filter( 'woocommerce_package_rates', array( $this, 'filter_package_rates' ), 100, 2 );
+		add_filter( 'woocommerce_order_item_get_name', array( $this, 'clean_shipping_label' ), 10, 2 );
+		add_filter( 'woocommerce_shipping_rate_label', array( $this, 'clean_shipping_rate_label' ), 10, 1 );
+	}
+
+	/**
+	 * Limpia el nombre del método de envío para no exponer nunca "Dropi" al cliente.
+	 * Aplica tanto a órdenes nuevas como órdenes previamente guardadas.
+	 */
+	public function clean_shipping_label( $name, $item = null ) {
+		if ( is_string( $name ) && false !== stripos( $name, 'dropi' ) ) {
+			$name = str_ireplace( array( 'Envío Dropi (Gratis)', 'Envío Dropi', 'Dropi' ), array( 'Envío Gratis', 'Envío Gratis', '' ), $name );
+			$name = trim( preg_replace( '/\s+/', ' ', $name ) );
+		}
+		return $name;
+	}
+
+	public function clean_shipping_rate_label( $label ) {
+		if ( is_string( $label ) && false !== stripos( $label, 'dropi' ) ) {
+			$label = str_ireplace( array( 'Envío Dropi (Gratis)', 'Envío Dropi', 'Dropi' ), array( 'Envío Gratis', 'Envío Gratis', '' ), $label );
+			$label = trim( preg_replace( '/\s+/', ' ', $label ) );
+		}
+		return $label;
 	}
 
 	/**
@@ -97,7 +119,7 @@ class Shipping {
 		if ( empty( $rates ) || ! is_array( $rates ) ) {
 			$rates   = array();
 			$rate_id = 'coco_cod_rate';
-			$label   = ( 0 === $target_cost ) ? __( 'Envío Dropi (Gratis)', 'coco-cod' ) : ( ! empty( $city ) ? sprintf( __( 'Envío a %s', 'coco-cod' ), $city ) : __( 'Envío', 'coco-cod' ) );
+			$label   = ( 0 === $target_cost ) ? __( 'Envío Gratis', 'coco-cod' ) : ( ! empty( $city ) ? sprintf( __( 'Envío a %s', 'coco-cod' ), $city ) : __( 'Envío', 'coco-cod' ) );
 			$rates[ $rate_id ] = new \WC_Shipping_Rate( $rate_id, $label, $target_cost, array(), 'coco_cod' );
 			return $rates;
 		}
@@ -108,7 +130,7 @@ class Shipping {
 
 			// Etiqueta clara según destino
 			if ( 0 === $target_cost ) {
-				$rates[ $rate_id ]->label = __( 'Envío Dropi (Gratis)', 'coco-cod' );
+				$rates[ $rate_id ]->label = __( 'Envío Gratis', 'coco-cod' );
 			} elseif ( ! empty( $city ) ) {
 				$rates[ $rate_id ]->label = sprintf( __( 'Envío a %s', 'coco-cod' ), $city );
 			}

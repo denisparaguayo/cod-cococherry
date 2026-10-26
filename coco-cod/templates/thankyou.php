@@ -312,9 +312,10 @@ if ( ! $shop_url ) {
 <?php
 /**
  * IMPORTANTE PARA MARKETING Y ANALÍTICA:
- * Mantenemos la ejecución del hook estándar de WooCommerce para que Facebook Pixel / Google Ads
+ * Mantenemos la ejecución del hook estándar de WooCommerce para que Facebook Pixel / Google Ads / TikTok
  * disparen su evento Purchase con el ID del pedido y valor exacto.
+ * Removemos las tablas visuales redundantes de WooCommerce para mostrar exclusivamente nuestra tarjeta limpia.
  */
-do_action( 'woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id() );
+remove_action( 'woocommerce_thankyou', 'woocommerce_order_details_table', 10 );
 do_action( 'woocommerce_thankyou', $order->get_id() );
 ?>
