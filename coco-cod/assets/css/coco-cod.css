@@ -1,0 +1,512 @@
+/**
+ * Estilos para Coco COD — Pedido Contra Entrega
+ */
+
+/* Botón en la ficha de producto */
+.coco-cod-btn-wrapper {
+	margin: 14px 0 18px 0;
+	width: 100%;
+	display: block;
+	clear: both;
+}
+
+.coco-cod-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 54px;
+	padding: 12px 20px;
+	background-color: var(--coco-btn-bg, #16a34a);
+	color: var(--coco-btn-color, #ffffff) !important;
+	border: none;
+	border-radius: var(--coco-btn-radius, 8px);
+	cursor: pointer;
+	box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+	transition: all 0.2s ease-in-out;
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.coco-cod-button:hover,
+.coco-cod-button:focus {
+	background-color: var(--coco-btn-hover-bg, #15803d);
+	color: var(--coco-btn-hover-color, #ffffff) !important;
+	box-shadow: 0 6px 16px rgba(22, 163, 74, 0.35);
+	transform: translateY(-1px);
+}
+
+.coco-cod-btn-icon {
+	display: inline-flex;
+	align-items: center;
+	margin-right: 12px;
+	flex-shrink: 0;
+}
+
+.coco-cod-btn-content {
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+
+.coco-cod-btn-title {
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.25;
+}
+
+.coco-cod-btn-desc {
+	font-size: 12px;
+	font-weight: 400;
+	opacity: 0.9;
+	margin-top: 2px;
+}
+
+/* Modal y Backdrop */
+.coco-cod-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999999;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.25s ease, visibility 0.25s ease;
+	font-family: inherit;
+}
+
+.coco-cod-modal.active {
+	opacity: 1;
+	visibility: visible;
+}
+
+.coco-cod-backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(15, 23, 42, 0.65);
+	backdrop-filter: blur(4px);
+}
+
+.coco-cod-dialog {
+	position: relative;
+	width: 92%;
+	max-width: 490px;
+	max-height: 90vh;
+	background: #ffffff;
+	border-radius: 14px;
+	box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.3);
+	overflow-y: auto;
+	z-index: 2;
+	padding: 24px;
+	box-sizing: border-box;
+	transform: scale(0.95);
+	transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.coco-cod-modal.active .coco-cod-dialog {
+	transform: scale(1);
+}
+
+/* Botón Cerrar */
+.coco-cod-close {
+	position: absolute;
+	top: 14px;
+	right: 16px;
+	background: transparent;
+	border: none;
+	font-size: 26px;
+	line-height: 1;
+	color: #64748b;
+	cursor: pointer;
+	padding: 4px 8px;
+	border-radius: 6px;
+	transition: color 0.15s, background-color 0.15s;
+}
+
+.coco-cod-close:hover {
+	color: #0f172a;
+	background-color: #f1f5f9;
+}
+
+/* Barra superior de producto */
+.coco-cod-product-bar {
+	display: flex;
+	align-items: center;
+	padding-bottom: 14px;
+	margin-bottom: 16px;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.coco-cod-product-thumb {
+	width: 48px;
+	height: 48px;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #f8fafc;
+	flex-shrink: 0;
+	margin-right: 12px;
+	border: 1px solid #e2e8f0;
+}
+
+.coco-cod-product-thumb img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.coco-cod-product-info {
+	flex-grow: 1;
+}
+
+.coco-cod-product-title {
+	font-size: 14px;
+	font-weight: 600;
+	color: #0f172a;
+	margin: 0 0 2px 0;
+	line-height: 1.25;
+}
+
+.coco-cod-product-meta {
+	font-size: 13px;
+	color: #475569;
+}
+
+.coco-product-unit-price {
+	font-weight: 700;
+	color: #16a34a;
+}
+
+.coco-product-qty-badge {
+	font-weight: 600;
+	color: #64748b;
+	margin-left: 6px;
+}
+
+/* Barra de progreso de pasos */
+.coco-cod-steps-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	padding: 0 4px;
+}
+
+.coco-step-item {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	color: #94a3b8;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.coco-step-num {
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #e2e8f0;
+	color: #64748b;
+	font-size: 12px;
+	font-weight: 700;
+	transition: all 0.2s;
+}
+
+.coco-step-item.active {
+	color: var(--coco-btn-bg, #16a34a);
+}
+
+.coco-step-item.active .coco-step-num {
+	background: var(--coco-btn-bg, #16a34a);
+	color: #ffffff;
+}
+
+.coco-step-line {
+	flex-grow: 1;
+	height: 2px;
+	background: #e2e8f0;
+	margin: 0 8px;
+}
+
+/* Paneles de pasos */
+.coco-step-pane {
+	display: none;
+}
+
+.coco-step-pane.active {
+	display: block;
+	animation: cocoFadeIn 0.2s ease-in-out;
+}
+
+@keyframes cocoFadeIn {
+	from { opacity: 0; transform: translateY(4px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.coco-step-title {
+	font-size: 15px;
+	font-weight: 700;
+	color: #0f172a;
+	margin: 0 0 16px 0;
+}
+
+/* Campos de formulario */
+.coco-field-group {
+	margin-bottom: 14px;
+}
+
+.coco-field-group label {
+	display: block;
+	font-size: 12px;
+	font-weight: 600;
+	color: #334155;
+	margin-bottom: 5px;
+}
+
+.coco-input {
+	width: 100%;
+	height: 42px;
+	padding: 8px 12px;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	font-size: 14px;
+	color: #0f172a;
+	background: #ffffff;
+	box-sizing: border-box;
+	transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.coco-input:focus {
+	outline: none;
+	border-color: var(--coco-btn-bg, #16a34a);
+	box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+}
+
+.coco-input:disabled {
+	background: #f8fafc;
+	color: #94a3b8;
+	cursor: not-allowed;
+}
+
+.coco-field-hint {
+	display: block;
+	font-size: 11px;
+	color: #64748b;
+	margin-top: 4px;
+}
+
+.coco-row {
+	display: flex;
+	gap: 12px;
+}
+
+.coco-col {
+	flex: 1;
+}
+
+/* Caja de previsualización de flete */
+.coco-shipping-preview-box {
+	background: #f8fafc;
+	border: 1px dashed #cbd5e1;
+	border-radius: 8px;
+	padding: 12px 14px;
+	margin-top: 14px;
+	margin-bottom: 16px;
+}
+
+.coco-preview-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 13px;
+	color: #334155;
+}
+
+.coco-preview-line strong {
+	color: var(--coco-btn-bg, #16a34a);
+	font-size: 14px;
+}
+
+/* Botones de acción del paso */
+.coco-step-actions {
+	margin-top: 20px;
+}
+
+.coco-actions-split {
+	display: flex;
+	gap: 10px;
+}
+
+.coco-primary-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 46px;
+	background: var(--coco-btn-bg, #16a34a);
+	color: var(--coco-btn-color, #ffffff) !important;
+	border: none;
+	border-radius: var(--coco-btn-radius, 8px);
+	font-size: 15px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: all 0.15s ease-in-out;
+	text-decoration: none;
+}
+
+.coco-primary-btn:hover {
+	background: var(--coco-btn-hover-bg, #15803d);
+	color: var(--coco-btn-hover-color, #ffffff) !important;
+}
+
+.coco-btn-back {
+	background: #f1f5f9;
+	color: #475569;
+	border: 1px solid #e2e8f0;
+	border-radius: var(--coco-btn-radius, 8px);
+	height: 46px;
+	padding: 0 16px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.15s;
+}
+
+.coco-btn-back:hover {
+	background: #e2e8f0;
+	color: #1e293b;
+}
+
+/* Paso 3: Tarjeta de Resumen */
+.coco-summary-card {
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 16px;
+	margin-bottom: 14px;
+}
+
+.coco-summary-section {
+	margin-bottom: 12px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #edf2f7;
+}
+
+.coco-summary-section strong {
+	font-size: 12px;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	display: block;
+	margin-bottom: 3px;
+}
+
+.coco-summary-text {
+	font-size: 14px;
+	font-weight: 600;
+	color: #0f172a;
+}
+
+.coco-summary-subtext {
+	font-size: 13px;
+	color: #475569;
+}
+
+.coco-pricing-table {
+	margin-top: 12px;
+}
+
+.coco-price-row {
+	display: flex;
+	justify-content: space-between;
+	font-size: 13px;
+	color: #475569;
+	margin-bottom: 6px;
+}
+
+.coco-price-total {
+	font-size: 16px;
+	font-weight: 800;
+	color: #0f172a;
+	padding-top: 8px;
+	border-top: 1px dashed #cbd5e1;
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+.coco-price-total span:last-child {
+	color: var(--coco-btn-bg, #16a34a);
+}
+
+.coco-cod-badge-box {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: #ecfdf5;
+	border: 1px solid #a7f3d0;
+	color: #065f46;
+	padding: 10px 14px;
+	border-radius: 8px;
+	font-size: 13px;
+	font-weight: 500;
+	margin-bottom: 16px;
+}
+
+.coco-badge-icon {
+	font-size: 18px;
+}
+
+/* Alertas de error inline */
+.coco-modal-alert {
+	padding: 10px 14px;
+	border-radius: 8px;
+	font-size: 13px;
+	margin-bottom: 14px;
+}
+
+.coco-modal-alert.error {
+	background: #fef2f2;
+	border: 1px solid #fecaca;
+	color: #b91c1c;
+}
+
+/* Ajustes Responsive en Móviles */
+@media (max-width: 600px) {
+	.coco-cod-dialog {
+		width: 100%;
+		max-width: 100%;
+		height: 100%;
+		max-height: 100vh;
+		border-radius: 0;
+		padding: 20px 16px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	#coco-cod-order-form {
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.coco-step-pane.active {
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.coco-step-actions {
+		margin-top: auto;
+		padding-top: 16px;
+	}
+}

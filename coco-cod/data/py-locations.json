@@ -1,0 +1,340 @@
+{
+  "ASU": {
+    "name": "Asunción (Distrito Capital)",
+    "cities": ["Asunción"]
+  },
+  "11": {
+    "name": "Central",
+    "cities": [
+      "Areguá",
+      "Capiatá",
+      "Fernando de la Mora",
+      "Guarambaré",
+      "Itá",
+      "Itauguá",
+      "J. Augusto Saldívar",
+      "Lambaré",
+      "Limpio",
+      "Luque",
+      "Mariano Roque Alonso",
+      "Ñemby",
+      "Nueva Italia",
+      "San Antonio",
+      "San Lorenzo",
+      "Villa Elisa",
+      "Villeta",
+      "Ypacaraí",
+      "Ypané"
+    ]
+  },
+  "01": {
+    "name": "Concepción",
+    "cities": [
+      "Concepción",
+      "Azotey",
+      "Belén",
+      "Horqueta",
+      "Loreto",
+      "Paso Barreto",
+      "San Alfredo",
+      "San Carlos del Apa",
+      "San Lázaro",
+      "Sargento José Félix López",
+      "Yby Yaú"
+    ]
+  },
+  "02": {
+    "name": "San Pedro",
+    "cities": [
+      "San Pedro de Ycuamandiyú",
+      "25 de Diciembre",
+      "Antequera",
+      "Capiibary",
+      "Choré",
+      "General Elizardo Aquino",
+      "General Francisco Isidoro Resquín",
+      "Guayaibí",
+      "Itacurubí del Rosario",
+      "Liberación",
+      "Lima",
+      "Nueva Germania",
+      "San Estanislao",
+      "San Pablo",
+      "San Vicente Pancholo",
+      "Santa Rosa del Aguaray",
+      "Tacuatí",
+      "Unión",
+      "Villa del Rosario",
+      "Yataity del Norte"
+    ]
+  },
+  "03": {
+    "name": "Cordillera",
+    "cities": [
+      "Caacupé",
+      "Altos",
+      "Arroyos y Esteros",
+      "Atyrá",
+      "Caraguatay",
+      "Emboscada",
+      "Eusebio Ayala",
+      "Isla Pucú",
+      "Itacurubí de la Cordillera",
+      "Juan de Mena",
+      "Loma Grande",
+      "Mbocayaty del Yhaguy",
+      "Nueva Colombia",
+      "Piribebuy",
+      "Primero de Marzo",
+      "San Bernardino",
+      "Santa Elena",
+      "Tobatí",
+      "Valenzuela"
+    ]
+  },
+  "04": {
+    "name": "Guairá",
+    "cities": [
+      "Villarrica",
+      "Borja",
+      "Capitán Mauricio José Troche",
+      "Coronel Martínez",
+      "Doctor Botrell",
+      "Félix Pérez Cardozo",
+      "General Eugenio A. Garay",
+      "Independencia",
+      "Itapé",
+      "Iturbe",
+      "José Fassardi",
+      "Mbocayaty del Guairá",
+      "Natalicio Talavera",
+      "Ñumí",
+      "Paso Yobái",
+      "San Salvador",
+      "Yataity del Guairá"
+    ]
+  },
+  "05": {
+    "name": "Caaguazú",
+    "cities": [
+      "Coronel Oviedo",
+      "Caaguazú",
+      "Carayaó",
+      "Doctor Cecilio Báez",
+      "Doctor J. Eulogio Estigarribia",
+      "Doctor Juan Manuel Frutos",
+      "José Domingo Ocampos",
+      "La Pastora",
+      "Mariscal Francisco Solano López",
+      "Nueva Londres",
+      "Nueva Toledo",
+      "R.I. 3 Corrales",
+      "Raúl Arsenio Oviedo",
+      "Repatriación",
+      "San Joaquín",
+      "San José de los Arroyos",
+      "Santa Rosa del Mbutuy",
+      "Tembiaporá",
+      "Vaquería",
+      "Yhú"
+    ]
+  },
+  "06": {
+    "name": "Caazapá",
+    "cities": [
+      "Caazapá",
+      "3 de Mayo",
+      "Abaí",
+      "Buena Vista",
+      "Doctor Moisés S. Bertoni",
+      "Fulgencio Yegros",
+      "General Higinio Morínigo",
+      "Maciel",
+      "San Juan Nepomuceno",
+      "Tavaí",
+      "Yuty"
+    ]
+  },
+  "07": {
+    "name": "Itapúa",
+    "cities": [
+      "Encarnación",
+      "Alto Verá",
+      "Bella Vista",
+      "Cambyretá",
+      "Capitán Meza",
+      "Capitán Miranda",
+      "Carlos Antonio López",
+      "Carmen del Paraná",
+      "Coronel Bogado",
+      "Edelira",
+      "Fram",
+      "General Artigas",
+      "General Delgado",
+      "Hohenau",
+      "Itapúa Poty",
+      "Jesús",
+      "José Leandro Oviedo",
+      "La Paz",
+      "Mayor Julio D. Otaño",
+      "Natalio",
+      "Nueva Alborada",
+      "Obligado",
+      "Pirapó",
+      "San Cosme y Damián",
+      "San Juan del Paraná",
+      "San Pedro del Paraná",
+      "San Rafael del Paraná",
+      "Tomás Romero Pereira",
+      "Trinidad",
+      "Yatytay"
+    ]
+  },
+  "08": {
+    "name": "Misiones",
+    "cities": [
+      "San Juan Bautista",
+      "Ayolas",
+      "San Ignacio",
+      "San Miguel",
+      "San Patricio",
+      "Santa María",
+      "Santa Rosa",
+      "Santiago",
+      "Villa Florida",
+      "Yabebyry"
+    ]
+  },
+  "09": {
+    "name": "Paraguarí",
+    "cities": [
+      "Paraguarí",
+      "Acahay",
+      "Caapucú",
+      "Carapeguá",
+      "Escobar",
+      "General Bernardino Caballero",
+      "La Colmena",
+      "Mbuyapey",
+      "Pirayú",
+      "Quiindy",
+      "Quyquyhó",
+      "San Roque González de Santa Cruz",
+      "Sapucai",
+      "Tebicuarymí",
+      "Yaguarón",
+      "Ybycuí",
+      "Ybytymí"
+    ]
+  },
+  "10": {
+    "name": "Alto Paraná",
+    "cities": [
+      "Ciudad del Este",
+      "Doctor Juan León Mallorquín",
+      "Doctor Raúl Peña",
+      "Domingo Martínez de Irala",
+      "Hernandarias",
+      "Iruña",
+      "Itakyry",
+      "Juan E. O'Leary",
+      "Los Cedrales",
+      "Mbaracayú",
+      "Minga Guazú",
+      "Minga Porá",
+      "Naranjal",
+      "Presidente Franco",
+      "San Alberto",
+      "San Cristóbal",
+      "Santa Fe del Paraná",
+      "Santa Rita",
+      "Santa Rosa del Monday",
+      "Tavapy",
+      "Yguazú"
+    ]
+  },
+  "12": {
+    "name": "Ñeembucú",
+    "cities": [
+      "Pilar",
+      "Alberdi",
+      "Cerrito",
+      "Desmochados",
+      "General José Eduvigis Díaz",
+      "Guazú Cuá",
+      "Humaitá",
+      "Isla Umbú",
+      "Laureles",
+      "Mayor José J. Martínez",
+      "Paso de Patria",
+      "San Juan Bautista del Ñeembucú",
+      "Tacuaras",
+      "Villa Franca",
+      "Villa Oliva",
+      "Villalbín"
+    ]
+  },
+  "13": {
+    "name": "Amambay",
+    "cities": [
+      "Pedro Juan Caballero",
+      "Bella Vista Norte",
+      "Capitán Bado",
+      "Cerro Corá",
+      "Karapaí",
+      "Zanja Pytá"
+    ]
+  },
+  "14": {
+    "name": "Canindeyú",
+    "cities": [
+      "Salto del Guairá",
+      "Corpus Christi",
+      "Curuguaty",
+      "General Francisco Caballero Álvarez",
+      "Itanará",
+      "Katueté",
+      "La Paloma del Espíritu Santo",
+      "Maracaná",
+      "Nueva Esperanza",
+      "Puerto Adela",
+      "Villa Ygatimí",
+      "Yasy Cañy",
+      "Yby Pytá",
+      "Ypejhú"
+    ]
+  },
+  "15": {
+    "name": "Presidente Hayes",
+    "cities": [
+      "Villa Hayes",
+      "Benjamín Aceval",
+      "Campo Aceval",
+      "General José María Bruguez",
+      "José Falcón",
+      "Nanawa",
+      "Nueva Asunción",
+      "Puerto Pinasco",
+      "Teniente Esteban Martínez",
+      "Teniente Irala Fernández"
+    ]
+  },
+  "16": {
+    "name": "Alto Paraguay",
+    "cities": [
+      "Fuerte Olimpo",
+      "Bahía Negra",
+      "Capitán Carmelo Peralta",
+      "Puerto Casado"
+    ]
+  },
+  "17": {
+    "name": "Boquerón",
+    "cities": [
+      "Filadelfia",
+      "Boquerón",
+      "Loma Plata",
+      "Mariscal Estigarribia"
+    ]
+  }
+}
