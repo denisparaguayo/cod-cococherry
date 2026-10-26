@@ -24,7 +24,11 @@ class Frontend {
 			return;
 		}
 
-		global $product;
+		$product_id = get_queried_object_id();
+		$product    = wc_get_product( $product_id );
+		if ( ! $product instanceof \WC_Product ) {
+			global $product;
+		}
 		if ( ! $product instanceof \WC_Product ) {
 			return;
 		}
@@ -53,6 +57,17 @@ class Frontend {
 			--coco-btn-radius: {$btn_rad};
 		}
 		";
+
+		// Opción para ocultar el botón nativo de añadir al carrito
+		if ( 'yes' === $plugin->get_setting( 'hide_add_to_cart', 'no' ) ) {
+			$custom_css .= "
+			.single_add_to_cart_button,
+			form.cart .button.alt:not(#coco-cod-open-modal) {
+				display: none !important;
+			}
+			";
+		}
+
 		wp_add_inline_style( 'coco-cod-css', $custom_css );
 
 		// JS principal
@@ -118,7 +133,11 @@ class Frontend {
 			return;
 		}
 
-		global $product;
+		$product_id = get_queried_object_id();
+		$product    = wc_get_product( $product_id );
+		if ( ! $product instanceof \WC_Product ) {
+			global $product;
+		}
 		if ( ! $product instanceof \WC_Product ) {
 			return;
 		}

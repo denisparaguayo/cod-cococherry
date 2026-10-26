@@ -143,9 +143,10 @@ class Settings {
 		$current = get_option( 'coco_cod_settings', array() );
 
 		// Procesar pestaña general y apariencia
-		$current['enabled']          = isset( $_POST['enabled'] ) ? 'yes' : 'no';
-		$current['test_mode']        = isset( $_POST['test_mode'] ) ? 'yes' : 'no';
-		$current['allow_reference']  = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
+		$current['enabled']           = isset( $_POST['enabled'] ) ? 'yes' : 'no';
+		$current['test_mode']         = isset( $_POST['test_mode'] ) ? 'yes' : 'no';
+		$current['hide_add_to_cart']  = isset( $_POST['hide_add_to_cart'] ) ? 'yes' : 'no';
+		$current['allow_reference']   = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
 
 		if ( isset( $_POST['btn_text'] ) ) {
 			$current['btn_text'] = sanitize_text_field( wp_unslash( $_POST['btn_text'] ) );
@@ -252,6 +253,15 @@ class Settings {
 									<label>
 										<input type="checkbox" name="test_mode" value="yes" <?php checked( $settings->get_setting( 'test_mode', 'no' ), 'yes' ); ?>>
 										<?php esc_html_e( 'Activar modo de prueba (solo los administradores o visitas con ?coco_test=1 verán el modal; los clientes verán la tienda normal).', 'coco-cod' ); ?>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Ocultar botón "Añadir al carrito"', 'coco-cod' ); ?></th>
+								<td>
+									<label>
+										<input type="checkbox" name="hide_add_to_cart" value="yes" <?php checked( $settings->get_setting( 'hide_add_to_cart', 'no' ), 'yes' ); ?>>
+										<?php esc_html_e( 'Ocultar el botón nativo de añadir al carrito para dejar únicamente el botón de pago contra entrega en la ficha de producto.', 'coco-cod' ); ?>
 									</label>
 								</td>
 							</tr>
