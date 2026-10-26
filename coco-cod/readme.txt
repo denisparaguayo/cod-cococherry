@@ -5,7 +5,7 @@ Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -39,6 +39,11 @@ Características principales:
 5. Ve a **WooCommerce > Coco COD** para configurar y gestionar actualizaciones.
 
 == Changelog ==
+
+= 1.4.3 =
+* Corrección y alineación visual del botón "Pagar al recibir": ahora se ubica en la misma fila al lado del selector de cantidad [ - 1 + ] igual que el botón original de WooCommerce.
+* Nuevo ajuste en Apariencia > Posición / Disposición para alternar entre "Al lado de la cantidad" o "Ancho completo abajo".
+* Ajustes de altura, flexbox nativo y adaptabilidad responsiva para pantallas móviles.
 
 = 1.4.2 =
 * Eliminada por completo la mención a "Dropi" de cara al cliente: ahora se muestra como "Envío Gratis" en el modal, checkout y resumen de compra.
