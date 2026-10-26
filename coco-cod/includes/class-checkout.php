@@ -97,6 +97,18 @@ class Checkout {
 		if ( isset( $_POST['coco_cod_order_source'] ) ) {
 			$order->update_meta_data( '_coco_cod_source', sanitize_text_field( $_POST['coco_cod_order_source'] ) );
 		}
+
+		if ( isset( $_POST['payment_method_choice'] ) ) {
+			$choice = sanitize_text_field( $_POST['payment_method_choice'] );
+			$order->update_meta_data( '_coco_cod_payment_type', $choice );
+
+			if ( 'transfer' === $choice ) {
+				$order->set_payment_method_title( __( 'Transferencia Bancaria / QR (Ueno)', 'coco-cod' ) );
+				$order->add_order_note( __( 'Pedido con opción de Transferencia Bancaria / QR (Ueno). Enviar o verificar comprobante.', 'coco-cod' ) );
+			} else {
+				$order->set_payment_method_title( __( 'Pago Contra Entrega (Efectivo)', 'coco-cod' ) );
+			}
+		}
 	}
 
 	/**

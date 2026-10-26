@@ -5,7 +5,7 @@ Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,9 @@ Pedido contra entrega en 3 pasos con ubicación primero, flete en vivo por ciuda
 Coco COD es un plugin de alto rendimiento diseñado para tiendas de WooCommerce en Paraguay y Latinoamérica que operan con pago contra entrega (COD) y dropshipping mediante Dropi.
 
 Características principales:
+* Opción de Transferencia Bancaria / QR para productos de Stock Propio: el cliente puede elegir entre Efectivo Contra Entrega o Transferencia Bancaria directa con datos de cuenta (Ueno) y botón para copiar cuenta.
+* Encabezado superior en el modal con título y subtítulo tranquilizador personalizable.
+* Pantalla de Agradecimiento y Confirmación moderna: diseño premium de alta conversión con aviso del monto exacto a pagar en efectivo o datos bancarios para transferencia, tracker de estados, resumen visual y botón a WhatsApp.
 * Actualizador automático directo desde GitHub: comprueba y actualiza a la última versión con 1 solo clic en el panel sin subir archivos ZIP.
 * Modal en 3 pasos ultra-rápido en la ficha de producto.
 * Base de datos local completa de departamentos y distritos de Paraguay (sin APIs externas lentas).
@@ -36,6 +39,21 @@ Características principales:
 5. Ve a **WooCommerce > Coco COD** para configurar y gestionar actualizaciones.
 
 == Changelog ==
+
+= 1.4.0 =
+* Nueva función de Transferencia Bancaria / QR para productos de Stock Propio (no Dropi).
+* Selector de método de pago en el Paso 3 del modal: Pago Contra Entrega (Efectivo) vs Transferencia Bancaria (Ueno Bank).
+* Tarjeta destacada de datos bancarios en la pantalla final de agradecimiento con botón de 1-clic para copiar el número de cuenta.
+* Botón de WhatsApp adaptado para enviar el comprobante de transferencia indicando el número de pedido.
+* Configuración de datos bancarios disponible en WooCommerce > Coco COD > General.
+
+= 1.3.1 =
+* Añadido encabezado superior al modal encima del producto con título ("Pedido Contra Entrega") y subtítulo ("Pagas en efectivo al recibir en tu domicilio 🇵🇾"), configurables en WooCommerce > Coco COD > Apariencia.
+* Tarjeta de producto estilizada con borde suave y fondo neutro para mayor elegancia visual.
+
+= 1.3.0 =
+* Nueva Pantalla de Agradecimiento Moderna: Reemplaza la pantalla simple por defecto de WooCommerce por un diseño visual optimizado para tiendas COD en Paraguay. Incluye aviso de efectivo exacto a preparar, estado en tiempo real, resumen de productos comprados, datos limpios de entrega y botón directo de contacto por WhatsApp.
+* Mantenimiento 100% de la compatibilidad con píxeles de analítica y Meta Ads mediante hooks nativos de WooCommerce.
 
 = 1.2.1 =
 * Botón de confirmación simplificado a "CONFIRMAR PEDIDO" sin mostrar monto repetido.

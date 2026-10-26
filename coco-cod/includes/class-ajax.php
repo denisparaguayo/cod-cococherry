@@ -209,7 +209,15 @@ class Ajax {
 		// 8. Preparar $_POST y $_REQUEST completos para WC_Checkout
 		$wc_nonce = wp_create_nonce( 'woocommerce-process_checkout' );
 
-		$_POST['payment_method']                    = 'cod';
+		// Determinar método de pago (transfer vs cod)
+		$payment_choice = isset( $_POST['payment_method_choice'] ) ? sanitize_text_field( $_POST['payment_method_choice'] ) : 'cod';
+		if ( $plugin->is_dropi_product( $product ) ) {
+			$payment_choice = 'cod';
+		}
+		$wc_payment_method = ( 'transfer' === $payment_choice ) ? 'bacs' : 'cod';
+
+		$_POST['payment_method']                    = $wc_payment_method;
+		$_POST['payment_method_choice']             = $payment_choice;
 		$_POST['billing_first_name']                = $first_name;
 		$_POST['billing_last_name']                 = $last_name;
 		$_POST['billing_phone']                     = $phone;
@@ -255,13 +263,23 @@ class Ajax {
 			$_REQUEST[ $key ] = $val;
 		}
 
-		// Asegurar que la pasarela COD esté activa y disponible durante este checkout
-		add_filter( 'woocommerce_available_payment_gateways', function ( $gateways ) {
-			if ( ! isset( $gateways['cod'] ) && class_exists( 'WC_Gateway_COD' ) ) {
-				$gateways['cod'] = new \WC_Gateway_COD();
-			}
-			if ( isset( $gateways['cod'] ) ) {
-				$gateways['cod']->enabled = 'yes';
+		// Asegurar que la pasarela elegida (COD o BACS) esté activa y disponible durante este checkout
+		add_filter( 'woocommerce_available_payment_gateways', function ( $gateways ) use ( $wc_payment_method ) {
+			if ( 'bacs' === $wc_payment_method ) {
+				if ( ! isset( $gateways['bacs'] ) && class_exists( '\WC_Gateway_BACS' ) ) {
+					$gateways['bacs'] = new \WC_Gateway_BACS();
+				}
+				if ( isset( $gateways['bacs'] ) ) {
+					$gateways['bacs']->enabled = 'yes';
+					$gateways['bacs']->title   = __( 'Transferencia Bancaria / QR (Ueno)', 'coco-cod' );
+				}
+			} else {
+				if ( ! isset( $gateways['cod'] ) && class_exists( '\WC_Gateway_COD' ) ) {
+					$gateways['cod'] = new \WC_Gateway_COD();
+				}
+				if ( isset( $gateways['cod'] ) ) {
+					$gateways['cod']->enabled = 'yes';
+				}
 			}
 			return $gateways;
 		}, 999 );

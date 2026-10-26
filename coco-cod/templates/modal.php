@@ -14,6 +14,15 @@ defined( 'ABSPATH' ) || exit;
 			&times;
 		</button>
 
+		<!-- Encabezado del Modal -->
+		<div class="coco-modal-header">
+			<div class="coco-modal-header-icon">📦</div>
+			<div class="coco-modal-header-text">
+				<h3 id="coco-modal-title" class="coco-modal-main-title"><?php echo esc_html( $plugin->get_setting( 'modal_title', 'Pedido Contra Entrega' ) ); ?></h3>
+				<span class="coco-modal-subtitle"><?php echo esc_html( $plugin->get_setting( 'modal_subtitle', 'Pagas en efectivo al recibir en tu domicilio 🇵🇾' ) ); ?></span>
+			</div>
+		</div>
+
 		<!-- Cabecera de Producto -->
 		<div class="coco-cod-product-bar">
 			<div class="coco-cod-product-thumb" id="coco-thumb-container">
@@ -186,10 +195,36 @@ defined( 'ABSPATH' ) || exit;
 					</div>
 				</div>
 
-				<div class="coco-cod-badge-box">
-					<span class="coco-badge-icon">💵</span>
-					<span><?php esc_html_e( 'Pagas en efectivo al recibir el paquete en tus manos.', 'coco-cod' ); ?></span>
-				</div>
+				<?php if ( ! $is_dropi ) : ?>
+					<div class="coco-payment-method-selector">
+						<span class="coco-selector-title"><?php esc_html_e( '¿Cómo deseas pagar?', 'coco-cod' ); ?></span>
+						<div class="coco-payment-options">
+							<label class="coco-payment-option selected" data-method="cod">
+								<input type="radio" name="payment_method_choice" value="cod" checked>
+								<span class="coco-option-icon">💵</span>
+								<div class="coco-option-text">
+									<strong><?php esc_html_e( 'Pago Contra Entrega (Efectivo)', 'coco-cod' ); ?></strong>
+									<span><?php esc_html_e( 'Pagas al recibir el paquete en tus manos', 'coco-cod' ); ?></span>
+								</div>
+							</label>
+
+							<label class="coco-payment-option" data-method="transfer">
+								<input type="radio" name="payment_method_choice" value="transfer">
+								<span class="coco-option-icon">🏦</span>
+								<div class="coco-option-text">
+									<strong><?php esc_html_e( 'Transferencia Bancaria / QR', 'coco-cod' ); ?></strong>
+									<span><?php esc_html_e( 'Ueno Bank · Envías el comprobante por WhatsApp', 'coco-cod' ); ?></span>
+								</div>
+							</label>
+						</div>
+					</div>
+				<?php else : ?>
+					<div class="coco-cod-badge-box">
+						<span class="coco-badge-icon">💵</span>
+						<span><?php esc_html_e( 'Pagas en efectivo al recibir el paquete en tus manos.', 'coco-cod' ); ?></span>
+						<input type="hidden" name="payment_method_choice" value="cod">
+					</div>
+				<?php endif; ?>
 
 				<div class="coco-step-actions coco-actions-split">
 					<button type="button" class="coco-btn-back" data-goto="2">&larr; <?php esc_html_e( 'Modificar Datos', 'coco-cod' ); ?></button>

@@ -72,6 +72,12 @@
 				self.goToStep(targetStep);
 			});
 
+			// Selector de método de pago (Contra Entrega vs Transferencia)
+			$(document).on('change', 'input[name="payment_method_choice"]', function() {
+				$('.coco-payment-option').removeClass('selected');
+				$(this).closest('.coco-payment-option').addClass('selected');
+			});
+
 			// Envío final del pedido
 			$(document).on('submit', '#coco-cod-order-form', function(e) {
 				e.preventDefault();

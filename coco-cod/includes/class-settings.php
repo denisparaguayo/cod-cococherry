@@ -148,12 +148,40 @@ class Settings {
 		$current['exclusive_cod_mode'] = isset( $_POST['exclusive_cod_mode'] ) ? 'yes' : 'no';
 		$current['hide_add_to_cart']   = isset( $_POST['hide_add_to_cart'] ) ? 'yes' : 'no';
 		$current['allow_reference']    = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
+		$current['custom_thankyou']    = isset( $_POST['custom_thankyou'] ) ? 'yes' : 'no';
+
+		if ( isset( $_POST['whatsapp_number'] ) ) {
+			$current['whatsapp_number'] = sanitize_text_field( wp_unslash( $_POST['whatsapp_number'] ) );
+		}
+
+		// Datos bancarios para transferencia
+		if ( isset( $_POST['bank_name'] ) ) {
+			$current['bank_name'] = sanitize_text_field( wp_unslash( $_POST['bank_name'] ) );
+		}
+		if ( isset( $_POST['bank_holder'] ) ) {
+			$current['bank_holder'] = sanitize_text_field( wp_unslash( $_POST['bank_holder'] ) );
+		}
+		if ( isset( $_POST['bank_id'] ) ) {
+			$current['bank_id'] = sanitize_text_field( wp_unslash( $_POST['bank_id'] ) );
+		}
+		if ( isset( $_POST['bank_account'] ) ) {
+			$current['bank_account'] = sanitize_text_field( wp_unslash( $_POST['bank_account'] ) );
+		}
+		if ( isset( $_POST['bank_currency'] ) ) {
+			$current['bank_currency'] = sanitize_text_field( wp_unslash( $_POST['bank_currency'] ) );
+		}
 
 		if ( isset( $_POST['btn_text'] ) ) {
 			$current['btn_text'] = sanitize_text_field( wp_unslash( $_POST['btn_text'] ) );
 		}
 		if ( isset( $_POST['btn_subtitle'] ) ) {
 			$current['btn_subtitle'] = sanitize_text_field( wp_unslash( $_POST['btn_subtitle'] ) );
+		}
+		if ( isset( $_POST['modal_title'] ) ) {
+			$current['modal_title'] = sanitize_text_field( wp_unslash( $_POST['modal_title'] ) );
+		}
+		if ( isset( $_POST['modal_subtitle'] ) ) {
+			$current['modal_subtitle'] = sanitize_text_field( wp_unslash( $_POST['modal_subtitle'] ) );
 		}
 		if ( isset( $_POST['btn_bg_color'] ) ) {
 			$current['btn_bg_color'] = sanitize_hex_color( wp_unslash( $_POST['btn_bg_color'] ) );
@@ -292,6 +320,67 @@ class Settings {
 									</label>
 								</td>
 							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Pantalla de Agradecimiento Moderna', 'coco-cod' ); ?></th>
+								<td>
+									<label>
+										<input type="checkbox" name="custom_thankyou" value="yes" <?php checked( $settings->get_setting( 'custom_thankyou', 'yes' ), 'yes' ); ?>>
+										<strong><?php esc_html_e( 'Activar pantalla de pedido confirmado moderna y optimizada para COD.', 'coco-cod' ); ?></strong>
+										<p class="description">
+											<?php esc_html_e( 'Sustituye la pantalla simple por defecto de WooCommerce por un diseño limpio con estado del pedido en tiempo real, aviso del monto exacto a pagar en efectivo al repartidor, desglose de productos y botón de WhatsApp.', 'coco-cod' ); ?>
+										</p>
+									</label>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'WhatsApp de la Tienda (opcional)', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" name="whatsapp_number" value="<?php echo esc_attr( $settings->get_setting( 'whatsapp_number', '' ) ); ?>" class="regular-text" placeholder="Ej: 595981123456">
+									<p class="description">
+										<?php esc_html_e( 'Si lo completas, en la pantalla de agradecimiento aparecerá un botón directo para que el cliente pueda confirmar o coordinar su entrega por WhatsApp.', 'coco-cod' ); ?>
+									</p>
+								</td>
+							</tr>
+						</table>
+
+						<h2 style="margin-top: 30px; font-size: 18px; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;">
+							<?php esc_html_e( 'Datos Bancarios para Transferencia (Productos de Stock Propio)', 'coco-cod' ); ?>
+						</h2>
+						<p class="description">
+							<?php esc_html_e( 'Para productos que no son de Dropi, el cliente podrá elegir pagar por Transferencia Bancaria y verá estos datos en la pantalla final de agradecimiento.', 'coco-cod' ); ?>
+						</p>
+
+						<table class="form-table">
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Entidad / Banco', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" name="bank_name" value="<?php echo esc_attr( $settings->get_setting( 'bank_name', 'Ueno' ) ); ?>" class="regular-text">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Titular de la Cuenta', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" name="bank_holder" value="<?php echo esc_attr( $settings->get_setting( 'bank_holder', 'MARIA ANASTASIA CONCEPCION PRIETO DE CANTERO' ) ); ?>" class="regular-text">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Cédula de Identidad (C.I.)', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" name="bank_id" value="<?php echo esc_attr( $settings->get_setting( 'bank_id', '1064733' ) ); ?>" class="regular-text">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Número de Cuenta', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" name="bank_account" value="<?php echo esc_attr( $settings->get_setting( 'bank_account', '61965042' ) ); ?>" class="regular-text">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Moneda de la Cuenta', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" name="bank_currency" value="<?php echo esc_attr( $settings->get_setting( 'bank_currency', 'Gs' ) ); ?>" class="small-text">
+								</td>
+							</tr>
 						</table>
 
 					<?php elseif ( 'appearance' === $tab ) : ?>
@@ -306,6 +395,20 @@ class Settings {
 								<th scope="row"><?php esc_html_e( 'Subtítulo del Botón', 'coco-cod' ); ?></th>
 								<td>
 									<input type="text" id="btn_subtitle" name="btn_subtitle" value="<?php echo esc_attr( $settings->get_setting( 'btn_subtitle', 'Envío rápido · Pago en efectivo' ) ); ?>" class="regular-text">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Título Superior del Modal', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" id="modal_title" name="modal_title" value="<?php echo esc_attr( $settings->get_setting( 'modal_title', 'Pedido Contra Entrega' ) ); ?>" class="regular-text">
+									<p class="description"><?php esc_html_e( 'Aparece en la parte superior del modal encima del producto.', 'coco-cod' ); ?></p>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Subtítulo Superior del Modal', 'coco-cod' ); ?></th>
+								<td>
+									<input type="text" id="modal_subtitle" name="modal_subtitle" value="<?php echo esc_attr( $settings->get_setting( 'modal_subtitle', 'Pagas en efectivo al recibir en tu domicilio 🇵🇾' ) ); ?>" class="regular-text">
+									<p class="description"><?php esc_html_e( 'Texto tranquilizador debajo del título superior.', 'coco-cod' ); ?></p>
 								</td>
 							</tr>
 							<tr>

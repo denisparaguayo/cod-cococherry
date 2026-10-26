@@ -16,6 +16,9 @@ class Frontend {
 		// Redirigir página de carrito y modificar botones de catálogo si el modo exclusivo está activo
 		add_action( 'template_redirect', array( $this, 'redirect_cart_if_exclusive' ) );
 		add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'filter_catalog_add_to_cart_link' ), 10, 2 );
+
+		// Sobrescribir pantalla de agradecimiento / confirmación para pedidos COD
+		add_filter( 'wc_get_template', array( $this, 'override_thankyou_template' ), 20, 5 );
 	}
 
 	public function enqueue_frontend_assets() {
@@ -43,6 +46,20 @@ class Frontend {
 			wp_register_style( 'coco-cod-sitewide', false );
 			wp_enqueue_style( 'coco-cod-sitewide' );
 			wp_add_inline_style( 'coco-cod-sitewide', $header_cart_css );
+		}
+
+		// Encolar estilos en la página de agradecimiento / confirmación
+		if ( is_order_received_page() ) {
+			wp_enqueue_style(
+				'coco-cod-css',
+				COCO_COD_URL . 'assets/css/coco-cod.css',
+				array(),
+				COCO_COD_VERSION
+			);
+
+			$btn_bg = $plugin->get_setting( 'btn_bg_color', '#16a34a' );
+			wp_add_inline_style( 'coco-cod-css', ":root { --coco-btn-bg: {$btn_bg}; }" );
+			return;
 		}
 
 		if ( ! is_product() ) {
@@ -200,5 +217,28 @@ class Frontend {
 			);
 		}
 		return $html;
+	}
+
+	/**
+	 * Sobrescribe la plantilla de agradecimiento / pedido recibido para pedidos contra entrega.
+	 */
+	public function override_thankyou_template( $template, $template_name, $args, $template_path, $default_path ) {
+		if ( 'checkout/thankyou.php' === $template_name && ! empty( $args['order'] ) ) {
+			$order = $args['order'];
+			if ( is_numeric( $order ) ) {
+				$order = wc_get_order( $order );
+			}
+
+			if ( $order instanceof \WC_Order ) {
+				$plugin = Plugin::instance();
+				if ( 'yes' === $plugin->get_setting( 'custom_thankyou', 'yes' ) ) {
+					$custom_template = COCO_COD_PATH . 'templates/thankyou.php';
+					if ( file_exists( $custom_template ) ) {
+						return $custom_template;
+					}
+				}
+			}
+		}
+		return $template;
 	}
 }
