@@ -141,91 +141,97 @@ class Settings {
 		}
 
 		$current = get_option( 'coco_cod_settings', array() );
+		$tab     = isset( $_POST['coco_cod_current_tab'] ) ? sanitize_key( $_POST['coco_cod_current_tab'] ) : ( isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general' );
 
-		// Procesar pestaña general y apariencia
-		$current['enabled']            = isset( $_POST['enabled'] ) ? 'yes' : 'no';
-		$current['test_mode']          = isset( $_POST['test_mode'] ) ? 'yes' : 'no';
-		$current['exclusive_cod_mode'] = isset( $_POST['exclusive_cod_mode'] ) ? 'yes' : 'no';
-		$current['hide_add_to_cart']   = isset( $_POST['hide_add_to_cart'] ) ? 'yes' : 'no';
-		$current['allow_reference']    = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
-		$current['custom_thankyou']    = isset( $_POST['custom_thankyou'] ) ? 'yes' : 'no';
+		if ( 'general' === $tab ) {
+			// Procesar únicamente la pestaña General
+			$current['enabled']            = isset( $_POST['enabled'] ) ? 'yes' : 'no';
+			$current['test_mode']          = isset( $_POST['test_mode'] ) ? 'yes' : 'no';
+			$current['exclusive_cod_mode'] = isset( $_POST['exclusive_cod_mode'] ) ? 'yes' : 'no';
+			$current['hide_add_to_cart']   = isset( $_POST['hide_add_to_cart'] ) ? 'yes' : 'no';
+			$current['allow_reference']    = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
+			$current['custom_thankyou']    = isset( $_POST['custom_thankyou'] ) ? 'yes' : 'no';
 
-		if ( isset( $_POST['whatsapp_number'] ) ) {
-			$current['whatsapp_number'] = sanitize_text_field( wp_unslash( $_POST['whatsapp_number'] ) );
-		}
+			if ( isset( $_POST['whatsapp_number'] ) ) {
+				$current['whatsapp_number'] = sanitize_text_field( wp_unslash( $_POST['whatsapp_number'] ) );
+			}
 
-		// Datos bancarios para transferencia
-		if ( isset( $_POST['bank_name'] ) ) {
-			$current['bank_name'] = sanitize_text_field( wp_unslash( $_POST['bank_name'] ) );
-		}
-		if ( isset( $_POST['bank_holder'] ) ) {
-			$current['bank_holder'] = sanitize_text_field( wp_unslash( $_POST['bank_holder'] ) );
-		}
-		if ( isset( $_POST['bank_id'] ) ) {
-			$current['bank_id'] = sanitize_text_field( wp_unslash( $_POST['bank_id'] ) );
-		}
-		if ( isset( $_POST['bank_account'] ) ) {
-			$current['bank_account'] = sanitize_text_field( wp_unslash( $_POST['bank_account'] ) );
-		}
-		if ( isset( $_POST['bank_currency'] ) ) {
-			$current['bank_currency'] = sanitize_text_field( wp_unslash( $_POST['bank_currency'] ) );
-		}
+			// Datos bancarios para transferencia
+			if ( isset( $_POST['bank_name'] ) ) {
+				$current['bank_name'] = sanitize_text_field( wp_unslash( $_POST['bank_name'] ) );
+			}
+			if ( isset( $_POST['bank_holder'] ) ) {
+				$current['bank_holder'] = sanitize_text_field( wp_unslash( $_POST['bank_holder'] ) );
+			}
+			if ( isset( $_POST['bank_id'] ) ) {
+				$current['bank_id'] = sanitize_text_field( wp_unslash( $_POST['bank_id'] ) );
+			}
+			if ( isset( $_POST['bank_account'] ) ) {
+				$current['bank_account'] = sanitize_text_field( wp_unslash( $_POST['bank_account'] ) );
+			}
+			if ( isset( $_POST['bank_currency'] ) ) {
+				$current['bank_currency'] = sanitize_text_field( wp_unslash( $_POST['bank_currency'] ) );
+			}
 
-		if ( isset( $_POST['btn_text'] ) ) {
-			$current['btn_text'] = sanitize_text_field( wp_unslash( $_POST['btn_text'] ) );
-		}
-		if ( isset( $_POST['btn_subtitle'] ) ) {
-			$current['btn_subtitle'] = sanitize_text_field( wp_unslash( $_POST['btn_subtitle'] ) );
-		}
-		if ( isset( $_POST['modal_title'] ) ) {
-			$current['modal_title'] = sanitize_text_field( wp_unslash( $_POST['modal_title'] ) );
-		}
-		if ( isset( $_POST['modal_subtitle'] ) ) {
-			$current['modal_subtitle'] = sanitize_text_field( wp_unslash( $_POST['modal_subtitle'] ) );
-		}
-		if ( isset( $_POST['btn_bg_color'] ) ) {
-			$current['btn_bg_color'] = sanitize_hex_color( wp_unslash( $_POST['btn_bg_color'] ) );
-		}
-		if ( isset( $_POST['btn_text_color'] ) ) {
-			$current['btn_text_color'] = sanitize_hex_color( wp_unslash( $_POST['btn_text_color'] ) );
-		}
-		if ( isset( $_POST['btn_hover_bg'] ) ) {
-			$current['btn_hover_bg'] = sanitize_hex_color( wp_unslash( $_POST['btn_hover_bg'] ) );
-		}
-		if ( isset( $_POST['btn_hover_text'] ) ) {
-			$current['btn_hover_text'] = sanitize_hex_color( wp_unslash( $_POST['btn_hover_text'] ) );
-		}
-		if ( isset( $_POST['btn_radius'] ) ) {
-			$current['btn_radius'] = sanitize_text_field( wp_unslash( $_POST['btn_radius'] ) );
-		}
+		} elseif ( 'appearance' === $tab ) {
+			// Procesar únicamente la pestaña Apariencia
+			if ( isset( $_POST['btn_text'] ) ) {
+				$current['btn_text'] = sanitize_text_field( wp_unslash( $_POST['btn_text'] ) );
+			}
+			if ( isset( $_POST['btn_subtitle'] ) ) {
+				$current['btn_subtitle'] = sanitize_text_field( wp_unslash( $_POST['btn_subtitle'] ) );
+			}
+			if ( isset( $_POST['modal_title'] ) ) {
+				$current['modal_title'] = sanitize_text_field( wp_unslash( $_POST['modal_title'] ) );
+			}
+			if ( isset( $_POST['modal_subtitle'] ) ) {
+				$current['modal_subtitle'] = sanitize_text_field( wp_unslash( $_POST['modal_subtitle'] ) );
+			}
+			if ( isset( $_POST['btn_bg_color'] ) ) {
+				$current['btn_bg_color'] = sanitize_hex_color( wp_unslash( $_POST['btn_bg_color'] ) );
+			}
+			if ( isset( $_POST['btn_text_color'] ) ) {
+				$current['btn_text_color'] = sanitize_hex_color( wp_unslash( $_POST['btn_text_color'] ) );
+			}
+			if ( isset( $_POST['btn_hover_bg'] ) ) {
+				$current['btn_hover_bg'] = sanitize_hex_color( wp_unslash( $_POST['btn_hover_bg'] ) );
+			}
+			if ( isset( $_POST['btn_hover_text'] ) ) {
+				$current['btn_hover_text'] = sanitize_hex_color( wp_unslash( $_POST['btn_hover_text'] ) );
+			}
+			if ( isset( $_POST['btn_radius'] ) ) {
+				$current['btn_radius'] = sanitize_text_field( wp_unslash( $_POST['btn_radius'] ) );
+			}
 
-		// Procesar pestaña envíos
-		if ( isset( $_POST['shipping_central'] ) ) {
-			$current['shipping_central'] = absint( $_POST['shipping_central'] );
-		}
-		if ( isset( $_POST['shipping_interior'] ) ) {
-			$current['shipping_interior'] = absint( $_POST['shipping_interior'] );
-		}
+		} elseif ( 'shipping' === $tab ) {
+			// Procesar únicamente la pestaña Tarifas de Envío
+			if ( isset( $_POST['shipping_central'] ) ) {
+				$current['shipping_central'] = absint( $_POST['shipping_central'] );
+			}
+			if ( isset( $_POST['shipping_interior'] ) ) {
+				$current['shipping_interior'] = absint( $_POST['shipping_interior'] );
+			}
 
-		// Procesar tabla de tarifas por ciudad
-		$sanitized_city_rates = array();
-		if ( isset( $_POST['city_rates'] ) && is_array( $_POST['city_rates'] ) ) {
-			foreach ( $_POST['city_rates'] as $rate ) {
-				if ( ! empty( $rate['city'] ) && isset( $rate['cost'] ) ) {
-					$sanitized_city_rates[] = array(
-						'state' => sanitize_text_field( $rate['state'] ),
-						'city'  => sanitize_text_field( $rate['city'] ),
-						'cost'  => absint( $rate['cost'] ),
-					);
+			// Procesar tabla de tarifas por ciudad
+			$sanitized_city_rates = array();
+			if ( isset( $_POST['city_rates'] ) && is_array( $_POST['city_rates'] ) ) {
+				foreach ( $_POST['city_rates'] as $rate ) {
+					if ( ! empty( $rate['city'] ) && isset( $rate['cost'] ) ) {
+						$sanitized_city_rates[] = array(
+							'state' => sanitize_text_field( $rate['state'] ),
+							'city'  => sanitize_text_field( $rate['city'] ),
+							'cost'  => absint( $rate['cost'] ),
+						);
+					}
 				}
 			}
+			$current['city_rates'] = $sanitized_city_rates;
 		}
-		$current['city_rates'] = $sanitized_city_rates;
 
 		update_option( 'coco_cod_settings', $current );
 		Plugin::instance()->reload_settings();
 
-		wp_safe_redirect( add_query_arg( array( 'page' => 'coco-cod', 'tab' => isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general', 'saved' => '1' ), admin_url( 'admin.php' ) ) );
+		wp_safe_redirect( add_query_arg( array( 'page' => 'coco-cod', 'tab' => $tab, 'saved' => '1' ), admin_url( 'admin.php' ) ) );
 		exit;
 	}
 
@@ -269,6 +275,7 @@ class Settings {
 				<form method="post" action="">
 					<?php wp_nonce_field( 'coco_cod_settings_action', 'coco_cod_settings_nonce' ); ?>
 					<input type="hidden" name="coco_cod_save_settings" value="1">
+					<input type="hidden" name="coco_cod_current_tab" value="<?php echo esc_attr( $tab ); ?>">
 
 					<?php if ( 'general' === $tab ) : ?>
 						<table class="form-table">
