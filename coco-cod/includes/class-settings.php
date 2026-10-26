@@ -143,10 +143,11 @@ class Settings {
 		$current = get_option( 'coco_cod_settings', array() );
 
 		// Procesar pestaña general y apariencia
-		$current['enabled']           = isset( $_POST['enabled'] ) ? 'yes' : 'no';
-		$current['test_mode']         = isset( $_POST['test_mode'] ) ? 'yes' : 'no';
-		$current['hide_add_to_cart']  = isset( $_POST['hide_add_to_cart'] ) ? 'yes' : 'no';
-		$current['allow_reference']   = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
+		$current['enabled']            = isset( $_POST['enabled'] ) ? 'yes' : 'no';
+		$current['test_mode']          = isset( $_POST['test_mode'] ) ? 'yes' : 'no';
+		$current['exclusive_cod_mode'] = isset( $_POST['exclusive_cod_mode'] ) ? 'yes' : 'no';
+		$current['hide_add_to_cart']   = isset( $_POST['hide_add_to_cart'] ) ? 'yes' : 'no';
+		$current['allow_reference']    = isset( $_POST['allow_reference'] ) ? 'yes' : 'no';
 
 		if ( isset( $_POST['btn_text'] ) ) {
 			$current['btn_text'] = sanitize_text_field( wp_unslash( $_POST['btn_text'] ) );
@@ -227,10 +228,15 @@ class Settings {
 				<a href="<?php echo esc_url( admin_url( 'admin.php?page=coco-cod&tab=health' ) ); ?>" class="nav-tab <?php echo 'health' === $tab ? 'nav-tab-active' : ''; ?>">
 					<?php esc_html_e( 'Diagnóstico / Health Check', 'coco-cod' ); ?>
 				</a>
+				<a href="<?php echo esc_url( admin_url( 'admin.php?page=coco-cod&tab=updates' ) ); ?>" class="nav-tab <?php echo 'updates' === $tab ? 'nav-tab-active' : ''; ?>">
+					<?php esc_html_e( 'Actualizaciones (GitHub)', 'coco-cod' ); ?>
+				</a>
 			</nav>
 
 			<?php if ( 'health' === $tab ) : ?>
 				<?php Plugin::instance()->health_module->render_health_tab(); ?>
+			<?php elseif ( 'updates' === $tab ) : ?>
+				<?php Plugin::instance()->updater_module->render_updates_tab(); ?>
 			<?php else : ?>
 				<form method="post" action="">
 					<?php wp_nonce_field( 'coco_cod_settings_action', 'coco_cod_settings_nonce' ); ?>
@@ -257,11 +263,23 @@ class Settings {
 								</td>
 							</tr>
 							<tr>
+								<th scope="row"><?php esc_html_e( 'Modo Exclusivo COD (Venta 1 a 1)', 'coco-cod' ); ?></th>
+								<td>
+									<label>
+										<input type="checkbox" name="exclusive_cod_mode" value="yes" <?php checked( $settings->get_setting( 'exclusive_cod_mode', 'yes' ), 'yes' ); ?>>
+										<strong><?php esc_html_e( 'Desactivar carrito tradicional y activar venta directa de a 1 producto.', 'coco-cod' ); ?></strong>
+										<p class="description">
+											<?php esc_html_e( 'Al activar: oculta el botón "Añadir al carrito", oculta el ícono del carrito en el header, redirige la página /carrito a la tienda y los productos se compran exclusivamente de a 1 unidad mediante el botón de pago contra entrega. Si en el futuro deseas reactivar el carrito convencional, simplemente desmarca esta casilla.', 'coco-cod' ); ?>
+										</p>
+									</label>
+								</td>
+							</tr>
+							<tr>
 								<th scope="row"><?php esc_html_e( 'Ocultar botón "Añadir al carrito"', 'coco-cod' ); ?></th>
 								<td>
 									<label>
 										<input type="checkbox" name="hide_add_to_cart" value="yes" <?php checked( $settings->get_setting( 'hide_add_to_cart', 'no' ), 'yes' ); ?>>
-										<?php esc_html_e( 'Ocultar el botón nativo de añadir al carrito para dejar únicamente el botón de pago contra entrega en la ficha de producto.', 'coco-cod' ); ?>
+										<?php esc_html_e( 'Ocultar el botón nativo de añadir al carrito independientemente del modo exclusivo.', 'coco-cod' ); ?>
 									</label>
 								</td>
 							</tr>

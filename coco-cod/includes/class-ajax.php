@@ -45,9 +45,10 @@ class Ajax {
 		$has_own_stock = $plugin->is_own_product( $product );
 		$shipping_cost = $plugin->shipping_module->get_shipping_cost( $state, $city, $has_own_stock );
 
-		$price    = (float) $product->get_price();
-		$subtotal = $price * $qty;
-		$total    = $subtotal + $shipping_cost;
+		$price          = (float) $product->get_price();
+		$subtotal       = $price * $qty;
+		$total          = $subtotal + $shipping_cost;
+		$currency_sym   = get_woocommerce_currency_symbol();
 
 		wp_send_json_success( array(
 			'shipping_cost'      => $shipping_cost,
@@ -56,6 +57,7 @@ class Ajax {
 			'formatted_subtotal' => wc_price( $subtotal ),
 			'total'              => $total,
 			'formatted_total'    => wc_price( $total ),
+			'plain_total'        => number_format( $total, 0, ',', '.' ) . ' ' . $currency_sym,
 		) );
 	}
 
@@ -180,6 +182,7 @@ class Ajax {
 		WC()->customer->set_shipping_city( $city );
 		WC()->customer->set_shipping_address_1( $address_1 );
 		WC()->customer->set_shipping_address_2( $address_2 );
+		WC()->customer->save();
 
 		// Recalcular envíos y totales
 		WC()->cart->calculate_shipping();
@@ -187,39 +190,61 @@ class Ajax {
 
 		// Asignar primer método de envío disponible
 		$packages = WC()->shipping()->get_packages();
+		$chosen_method = 'coco_cod_rate';
 		if ( ! empty( $packages ) ) {
 			foreach ( $packages as $i => $package ) {
 				if ( ! empty( $package['rates'] ) ) {
-					$rate_keys = array_keys( $package['rates'] );
+					$rate_keys     = array_keys( $package['rates'] );
 					$chosen_method = reset( $rate_keys );
-					WC()->session->set( 'chosen_shipping_methods', array( $chosen_method ) );
-					$_POST['shipping_method'] = array( $chosen_method );
 					break;
 				}
 			}
 		}
 
-		// 8. Preparar $_POST nativo para WC_Checkout
-		$_POST['payment_method']              = 'cod';
-		$_POST['billing_first_name']          = $first_name;
-		$_POST['billing_last_name']           = $last_name;
-		$_POST['billing_phone']               = $phone;
-		$_POST['billing_email']               = $email;
-		$_POST['billing_country']             = 'PY';
-		$_POST['billing_state']               = $state;
-		$_POST['billing_city']                = $city;
-		$_POST['billing_address_1']           = $address_1;
-		$_POST['billing_address_2']           = $address_2;
-		$_POST['ship_to_different_address']   = 0;
-		$_POST['coco_cod_order_source']       = 'modal';
-		$_POST['woocommerce-process-checkout-nonce'] = wp_create_nonce( 'woocommerce-process_checkout' );
-		$_POST['_wpnonce']                    = $_POST['woocommerce-process-checkout-nonce'];
+		WC()->session->set( 'chosen_shipping_methods', array( $chosen_method ) );
+
+		// 8. Preparar $_POST y $_REQUEST completos para WC_Checkout
+		$wc_nonce = wp_create_nonce( 'woocommerce-process_checkout' );
+
+		$_POST['payment_method']                    = 'cod';
+		$_POST['billing_first_name']                = $first_name;
+		$_POST['billing_last_name']                 = $last_name;
+		$_POST['billing_phone']                     = $phone;
+		$_POST['billing_email']                     = $email;
+		$_POST['billing_country']                   = 'PY';
+		$_POST['billing_state']                     = $state;
+		$_POST['billing_city']                      = $city;
+		$_POST['billing_address_1']                 = $address_1;
+		$_POST['billing_address_2']                 = $address_2;
+		$_POST['ship_to_different_address']         = 0;
+		$_POST['shipping_method']                   = array( $chosen_method );
+		$_POST['coco_cod_order_source']             = 'modal';
+		$_POST['woocommerce-process-checkout-nonce'] = $wc_nonce;
+		$_POST['_wpnonce']                          = $wc_nonce;
+		$_POST['terms']                             = 1;
+		$_POST['terms-field']                       = 1;
+
+		// IMPORTANTE: WC_Checkout lee los nonces de $_REQUEST, que en PHP no se actualiza solo con $_POST
+		foreach ( $_POST as $key => $val ) {
+			$_REQUEST[ $key ] = $val;
+		}
+
+		// Asegurar que la pasarela COD esté activa y disponible durante este checkout
+		add_filter( 'woocommerce_available_payment_gateways', function ( $gateways ) {
+			if ( ! isset( $gateways['cod'] ) && class_exists( 'WC_Gateway_COD' ) ) {
+				$gateways['cod'] = new \WC_Gateway_COD();
+			}
+			if ( isset( $gateways['cod'] ) ) {
+				$gateways['cod']->enabled = 'yes';
+			}
+			return $gateways;
+		}, 999 );
 
 		// 9. Ejecutar el checkout nativo de WooCommerce
 		// En AJAX, process_checkout() llamará internamente a wp_send_json( array( 'result' => 'success', 'redirect' => ... ) ) y saldrá
 		WC()->checkout()->process_checkout();
 
-		// Si por alguna razón la ejecución llega aquí sin errores:
+		// Si por alguna razón la ejecución llega aquí con errores:
 		$notices = wc_print_notices( true );
 		if ( ! empty( $notices ) ) {
 			wp_send_json_error( array( 'message' => wp_strip_all_tags( $notices ) ) );

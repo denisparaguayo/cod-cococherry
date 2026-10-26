@@ -12,15 +12,40 @@ class Frontend {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ) );
 		add_action( 'woocommerce_after_add_to_cart_button', array( $this, 'render_cod_button' ), 20 );
 		add_action( 'wp_footer', array( $this, 'render_cod_modal' ) );
+
+		// Redirigir página de carrito y modificar botones de catálogo si el modo exclusivo está activo
+		add_action( 'template_redirect', array( $this, 'redirect_cart_if_exclusive' ) );
+		add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'filter_catalog_add_to_cart_link' ), 10, 2 );
 	}
 
 	public function enqueue_frontend_assets() {
-		if ( ! is_product() ) {
+		$plugin = Plugin::instance();
+		if ( ! $plugin->is_active_for_current_user() ) {
 			return;
 		}
 
-		$plugin = Plugin::instance();
-		if ( ! $plugin->is_active_for_current_user() ) {
+		$is_exclusive = 'yes' === $plugin->get_setting( 'exclusive_cod_mode', 'yes' );
+
+		// CSS global para ocultar carrito del header si el modo exclusivo está activo
+		if ( $is_exclusive ) {
+			$header_cart_css = "
+			.site-header-item-cart,
+			.kadence-header-cart,
+			.header-cart,
+			.menu-item-cart,
+			.widget_shopping_cart,
+			.woocommerce-mini-cart,
+			.cart-contents,
+			.wp-block-woocommerce-mini-cart {
+				display: none !important;
+			}
+			";
+			wp_register_style( 'coco-cod-sitewide', false );
+			wp_enqueue_style( 'coco-cod-sitewide' );
+			wp_add_inline_style( 'coco-cod-sitewide', $header_cart_css );
+		}
+
+		if ( ! is_product() ) {
 			return;
 		}
 
@@ -58,11 +83,12 @@ class Frontend {
 		}
 		";
 
-		// Opción para ocultar el botón nativo de añadir al carrito
-		if ( 'yes' === $plugin->get_setting( 'hide_add_to_cart', 'no' ) ) {
+		// Ocultar botón nativo de añadir al carrito si modo exclusivo o hide_add_to_cart están activos
+		if ( $is_exclusive || 'yes' === $plugin->get_setting( 'hide_add_to_cart', 'no' ) ) {
 			$custom_css .= "
 			.single_add_to_cart_button,
-			form.cart .button.alt:not(#coco-cod-open-modal) {
+			form.cart .button.alt:not(#coco-cod-open-modal),
+			.woocommerce-variation-add-to-cart .single_add_to_cart_button {
 				display: none !important;
 			}
 			";
@@ -147,5 +173,32 @@ class Frontend {
 		$allow_reference = 'yes' === $plugin->get_setting( 'allow_reference', 'yes' );
 
 		include COCO_COD_PATH . 'templates/modal.php';
+	}
+
+	/**
+	 * Redirige la página de carrito a la tienda si el modo exclusivo COD está activo.
+	 */
+	public function redirect_cart_if_exclusive() {
+		$plugin = Plugin::instance();
+		if ( is_cart() && 'yes' === $plugin->get_setting( 'exclusive_cod_mode', 'yes' ) && $plugin->is_active_for_current_user() ) {
+			$shop_url = wc_get_page_permalink( 'shop' );
+			wp_safe_redirect( $shop_url ? $shop_url : home_url( '/' ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Reemplaza el botón de 'Añadir al carrito' por 'Ver producto' en catálogos si el modo exclusivo está activo.
+	 */
+	public function filter_catalog_add_to_cart_link( $html, $product ) {
+		$plugin = Plugin::instance();
+		if ( 'yes' === $plugin->get_setting( 'exclusive_cod_mode', 'yes' ) && $plugin->is_active_for_current_user() ) {
+			return sprintf(
+				'<a href="%s" class="button product_type_simple">%s</a>',
+				esc_url( $product->get_permalink() ),
+				esc_html__( 'Ver producto', 'coco-cod' )
+			);
+		}
+		return $html;
 	}
 }

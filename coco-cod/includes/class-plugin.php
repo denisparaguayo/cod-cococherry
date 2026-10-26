@@ -38,6 +38,7 @@ class Plugin {
 	public $frontend_module;
 	public $ajax_module;
 	public $health_module;
+	public $updater_module;
 
 	/**
 	 * Obtener instancia singleton.
@@ -69,6 +70,7 @@ class Plugin {
 		$this->frontend_module = new Frontend();
 		$this->ajax_module     = new Ajax();
 		$this->health_module   = new Health();
+		$this->updater_module  = new Updater();
 	}
 
 	/**

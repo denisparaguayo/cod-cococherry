@@ -88,15 +88,19 @@ class Shipping {
 	 * @return array
 	 */
 	public function filter_package_rates( $rates, $package ) {
-		if ( empty( $rates ) || ! is_array( $rates ) ) {
-			return $rates;
-		}
-
 		$state = isset( $package['destination']['state'] ) ? (string) $package['destination']['state'] : '';
 		$city  = isset( $package['destination']['city'] ) ? (string) $package['destination']['city'] : '';
 
 		$has_own_stock = $this->package_has_own_stock( $package );
 		$target_cost   = $this->get_shipping_cost( $state, $city, $has_own_stock );
+
+		if ( empty( $rates ) || ! is_array( $rates ) ) {
+			$rates   = array();
+			$rate_id = 'coco_cod_rate';
+			$label   = ( 0 === $target_cost ) ? __( 'Envío Dropi (Gratis)', 'coco-cod' ) : ( ! empty( $city ) ? sprintf( __( 'Envío a %s', 'coco-cod' ), $city ) : __( 'Envío', 'coco-cod' ) );
+			$rates[ $rate_id ] = new \WC_Shipping_Rate( $rate_id, $label, $target_cost, array(), 'coco_cod' );
+			return $rates;
+		}
 
 		foreach ( $rates as $rate_id => $rate ) {
 			$rates[ $rate_id ]->cost  = $target_cost;
