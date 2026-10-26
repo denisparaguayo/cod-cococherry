@@ -100,6 +100,9 @@ class Ajax {
 		$variation_id = isset( $_POST['variation_id'] ) ? absint( $_POST['variation_id'] ) : 0;
 		$qty          = isset( $_POST['quantity'] ) ? max( 1, absint( $_POST['quantity'] ) ) : 1;
 
+		$plugin = Plugin::instance();
+		$state  = $plugin->normalize_state_code( $state );
+
 		// 5. Validaciones de campos obligatorios
 		if ( mb_strlen( $first_name ) < 2 || mb_strlen( $last_name ) < 2 ) {
 			wp_send_json_error( array( 'message' => __( 'Por favor ingresa tu nombre y apellido completos.', 'coco-cod' ) ) );
@@ -113,7 +116,7 @@ class Ajax {
 			wp_send_json_error( array( 'message' => __( 'Por favor ingresa un correo electrónico real y válido.', 'coco-cod' ) ) );
 		}
 
-		if ( empty( $state ) || empty( $city ) || mb_strlen( $address_1 ) < 4 ) {
+		if ( '' === $state || empty( $city ) || mb_strlen( $address_1 ) < 4 ) {
 			wp_send_json_error( array( 'message' => __( 'Por favor completa tu departamento, ciudad y dirección exacta.', 'coco-cod' ) ) );
 		}
 
@@ -126,7 +129,6 @@ class Ajax {
 		}
 
 		// Validar que Dropi no se envíe a Alto Paraguay (16)
-		$plugin = Plugin::instance();
 		if ( '16' === $state && $plugin->is_dropi_product( $product ) ) {
 			wp_send_json_error( array( 'message' => __( 'Dropi no cuenta con cobertura de entrega en el departamento de Alto Paraguay.', 'coco-cod' ) ) );
 		}

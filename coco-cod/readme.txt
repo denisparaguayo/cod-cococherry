@@ -1,5 +1,6 @@
 === Coco COD — Pedido Contra Entrega para WooCommerce ===
-Contributors: Coco COD
+Contributors: denisparaguayo
+Donate link: https://github.com/denisparaguayo/cod-cococherry
 Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7

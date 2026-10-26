@@ -169,7 +169,26 @@ class Plugin {
 	}
 
 	/**
-	 * Asegurar que todos los 17 departamentos + Capital estén en WooCommerce para PY.
+	 * Normaliza el código de departamento para que coincida exactamente con los estados de WooCommerce.
+	 * Asunción / Capital es '0'. Departamentos son '1' a '17'.
+	 *
+	 * @param string $state
+	 * @return string
+	 */
+	public function normalize_state_code( $state ) {
+		$state = trim( (string) $state );
+		if ( 'ASU' === strtoupper( $state ) || '00' === $state || '0' === $state ) {
+			return '0';
+		}
+		if ( preg_match( '/^0([1-9])$/', $state, $matches ) ) {
+			return $matches[1];
+		}
+		return $state;
+	}
+
+	/**
+	 * Asegurar que todos los 17 departamentos + Capital (código 0) estén en WooCommerce para PY.
+	 * Preserva y añade '16' (Alto Paraguay), 100% compatible con zonas PY:0, PY:11, etc.
 	 *
 	 * @param array $states
 	 * @return array
@@ -180,12 +199,15 @@ class Plugin {
 			return $states;
 		}
 
-		$py_states = array();
-		foreach ( $locations as $code => $data ) {
-			$py_states[ $code ] = $data['name'];
+		if ( ! isset( $states['PY'] ) || ! is_array( $states['PY'] ) ) {
+			$states['PY'] = array();
 		}
 
-		$states['PY'] = $py_states;
+		foreach ( $locations as $code => $data ) {
+			$clean_code = $this->normalize_state_code( $code );
+			$states['PY'][ $clean_code ] = $data['name'];
+		}
+
 		return $states;
 	}
 

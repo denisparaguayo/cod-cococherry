@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: Coco COD — Pedido Contra Entrega para WooCommerce
- * Plugin URI:  https://github.com/coco-cod
+ * Plugin URI:  https://github.com/denisparaguayo/cod-cococherry
  * Description: Pedido contra entrega en 3 pasos con ubicación primero, flete en vivo por ciudad, compatibilidad con Dropi y personalización de botones.
  * Version:     1.1.0
- * Author:      Coco COD
- * Author URI:  https://github.com/coco-cod
+ * Author:      Denis Paraguayo
+ * Author URI:  https://github.com/denisparaguayo
  * Text Domain: coco-cod
  * Domain Path: /languages
  * Requires at least: 5.8

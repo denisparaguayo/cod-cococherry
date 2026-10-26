@@ -52,7 +52,8 @@ class Shipping {
 			return 0;
 		}
 
-		$plugin   = Plugin::instance();
+		$plugin    = Plugin::instance();
+		$state     = $plugin->normalize_state_code( $state );
 		$city_trim = mb_strtolower( trim( (string) $city ) );
 
 		// 1. Verificar si la ciudad está en la lista de tarifas personalizadas
@@ -60,8 +61,9 @@ class Shipping {
 		if ( ! empty( $city_rates ) && is_array( $city_rates ) ) {
 			foreach ( $city_rates as $rule ) {
 				if ( ! empty( $rule['city'] ) && mb_strtolower( trim( $rule['city'] ) ) === $city_trim ) {
+					$rule_state = ! empty( $rule['state'] ) ? $plugin->normalize_state_code( $rule['state'] ) : '';
 					// Si se definió un estado, comprobar que coincida (o aceptar si coincide ciudad)
-					if ( empty( $rule['state'] ) || $rule['state'] === $state ) {
+					if ( empty( $rule_state ) || $rule_state === $state ) {
 						return absint( $rule['cost'] );
 					}
 				}
@@ -69,12 +71,12 @@ class Shipping {
 		}
 
 		// 2. Si no es ciudad especial, evaluar zona general
-		// Asunción (ASU o 00) y Central (11)
-		if ( 'ASU' === $state || '00' === $state || '11' === $state ) {
+		// Asunción ('0') y Central ('11') -> Zona Capital y Central
+		if ( '0' === $state || '11' === $state ) {
 			return absint( $plugin->get_setting( 'shipping_central', 35000 ) );
 		}
 
-		// 3. Interior del país
+		// 3. Interior del país ('1' a '17' excepto '11')
 		return absint( $plugin->get_setting( 'shipping_interior', 45000 ) );
 	}
 
