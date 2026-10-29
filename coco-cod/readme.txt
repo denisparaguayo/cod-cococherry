@@ -5,7 +5,7 @@ Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.4.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,6 +16,7 @@ Pedido contra entrega en 3 pasos con ubicación primero, flete en vivo por ciuda
 Coco COD es un plugin de alto rendimiento diseñado para tiendas de WooCommerce en Paraguay y Latinoamérica que operan con pago contra entrega (COD) y dropshipping mediante Dropi.
 
 Características principales:
+* Compatibilidad nativa y sincronización fluida con Dropi Paraguay: mapeo automático de departamentos (ej. Asuncion, Central, Alto Paraná) para evitar errores de cobertura o códigos no reconocidos.
 * Opción de Transferencia Bancaria / QR para productos de Stock Propio: el cliente puede elegir entre Efectivo Contra Entrega o Transferencia Bancaria directa con datos de cuenta (Ueno) y botón para copiar cuenta.
 * Encabezado superior en el modal con título y subtítulo tranquilizador personalizable.
 * Pantalla de Agradecimiento y Confirmación moderna: diseño premium de alta conversión con aviso del monto exacto a pagar en efectivo o datos bancarios para transferencia, tracker de estados, resumen visual y botón a WhatsApp.
@@ -39,6 +40,11 @@ Características principales:
 5. Ve a **WooCommerce > Coco COD** para configurar y gestionar actualizaciones.
 
 == Changelog ==
+
+= 1.4.4 =
+* Solucionado el error de sincronización de pedidos con Dropi Paraguay ("El departamento no existe o está deshabilitado... 0"): ahora se traduce y entrega automáticamente la nomenclatura oficial de departamentos de Dropi (ej. "Asuncion" en lugar del código numérico '0').
+* Mapeo retroactivo para órdenes existentes mediante filtros en los getters de WooCommerce y en la REST API (`woocommerce_rest_prepare_shop_order_object`).
+* Prevención definitiva de incompatibilidades con la API de logística de Dropi en todos los departamentos de Paraguay.
 
 = 1.4.3 =
 * Corrección y alineación visual del botón "Pagar al recibir": ahora se ubica en la misma fila al lado del selector de cantidad [ - 1 + ] igual que el botón original de WooCommerce.

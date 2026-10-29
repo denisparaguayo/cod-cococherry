@@ -82,6 +82,11 @@ class Plugin {
 
 		// Enriquecer el selector de países/estados si es necesario
 		add_filter( 'woocommerce_countries_allowed_country_states', array( $this, 'ensure_py_states' ) );
+
+		// Compatibilidad de sincronización con Dropi para pedidos de Paraguay
+		add_filter( 'woocommerce_order_get_shipping_state', array( $this, 'filter_order_shipping_state' ), 20, 2 );
+		add_filter( 'woocommerce_order_get_billing_state', array( $this, 'filter_order_billing_state' ), 20, 2 );
+		add_filter( 'woocommerce_rest_prepare_shop_order_object', array( $this, 'filter_rest_order_for_dropi' ), 20, 3 );
 	}
 
 	/**
@@ -171,7 +176,108 @@ class Plugin {
 	}
 
 	/**
-	 * Normaliza el código de departamento para que coincida exactamente con los estados de WooCommerce.
+	 * Mapeo de departamentos de Paraguay a la nomenclatura exacta que exige Dropi.
+	 *
+	 * @param string $state Código o nombre del departamento.
+	 * @return string Nombre reconocido por la API de Dropi.
+	 */
+	public function get_dropi_state_name( $state ) {
+		$state_clean = trim( (string) $state );
+		$map = array(
+			'0'                => 'Asuncion',
+			'ASU'              => 'Asuncion',
+			'PY-ASU'           => 'Asuncion',
+			'Capital'          => 'Asuncion',
+			'Distrito Capital' => 'Asuncion',
+			'Asunción'         => 'Asuncion',
+			'Asuncion'         => 'Asuncion',
+			'1'                => 'Concepcion',
+			'PY-1'             => 'Concepcion',
+			'Concepción'       => 'Concepcion',
+			'Concepcion'       => 'Concepcion',
+			'2'                => 'San Pedro',
+			'PY-2'             => 'San Pedro',
+			'3'                => 'Cordillera',
+			'PY-3'             => 'Cordillera',
+			'4'                => 'Guaira',
+			'PY-4'             => 'Guaira',
+			'Guairá'           => 'Guaira',
+			'5'                => 'Caaguazu',
+			'PY-5'             => 'Caaguazu',
+			'Caaguazú'         => 'Caaguazu',
+			'6'                => 'Caazapa',
+			'PY-6'             => 'Caazapa',
+			'Caazapá'          => 'Caazapa',
+			'7'                => 'Itapua',
+			'PY-7'             => 'Itapua',
+			'Itapúa'           => 'Itapua',
+			'8'                => 'Misiones',
+			'PY-8'             => 'Misiones',
+			'9'                => 'Paraguari',
+			'PY-9'             => 'Paraguari',
+			'Paraguarí'        => 'Paraguari',
+			'10'               => 'Alto Paraná',
+			'PY-10'            => 'Alto Paraná',
+			'Alto Parana'      => 'Alto Paraná',
+			'11'               => 'Central',
+			'PY-11'            => 'Central',
+			'12'               => 'Ñeembucú',
+			'PY-12'            => 'Ñeembucú',
+			'Neembucu'         => 'Ñeembucú',
+			'13'               => 'Amambay',
+			'PY-13'            => 'Amambay',
+			'14'               => 'Canindeyu',
+			'PY-14'            => 'Canindeyu',
+			'Canindeyú'        => 'Canindeyu',
+			'15'               => 'Presidente Hayes',
+			'PY-15'            => 'Presidente Hayes',
+			'16'               => 'Alto Paraguay',
+			'PY-16'            => 'Alto Paraguay',
+			'17'               => 'Boqueron',
+			'PY-17'            => 'Boqueron',
+			'Boquerón'         => 'Boqueron',
+		);
+
+		return isset( $map[ $state_clean ] ) ? $map[ $state_clean ] : $state;
+	}
+
+	/**
+	 * Filtra el estado de envío del pedido para devolver la nomenclatura de Dropi en Paraguay.
+	 */
+	public function filter_order_shipping_state( $value, $order ) {
+		if ( $order instanceof \WC_Order && 'PY' === $order->get_shipping_country() ) {
+			return $this->get_dropi_state_name( $value );
+		}
+		return $value;
+	}
+
+	/**
+	 * Filtra el estado de facturación del pedido para devolver la nomenclatura de Dropi en Paraguay.
+	 */
+	public function filter_order_billing_state( $value, $order ) {
+		if ( $order instanceof \WC_Order && 'PY' === $order->get_billing_country() ) {
+			return $this->get_dropi_state_name( $value );
+		}
+		return $value;
+	}
+
+	/**
+	 * Filtra la respuesta de la REST API de WooCommerce cuando Dropi consulta el pedido.
+	 */
+	public function filter_rest_order_for_dropi( $response, $order, $request ) {
+		if ( ! empty( $response->data['shipping']['country'] ) && 'PY' === $response->data['shipping']['country'] ) {
+			$raw_state = $response->data['shipping']['state'] ?? '';
+			$response->data['shipping']['state'] = $this->get_dropi_state_name( $raw_state );
+		}
+		if ( ! empty( $response->data['billing']['country'] ) && 'PY' === $response->data['billing']['country'] ) {
+			$raw_state = $response->data['billing']['state'] ?? '';
+			$response->data['billing']['state'] = $this->get_dropi_state_name( $raw_state );
+		}
+		return $response;
+	}
+
+	/**
+	 * Normaliza el código de departamento para que coincida exactamente con las tarifas internas.
 	 * Asunción / Capital es '0'. Departamentos son '1' a '17'.
 	 *
 	 * @param string $state
@@ -179,8 +285,12 @@ class Plugin {
 	 */
 	public function normalize_state_code( $state ) {
 		$state = trim( (string) $state );
-		if ( 'ASU' === strtoupper( $state ) || '00' === $state || '0' === $state ) {
+		$upper = strtoupper( $state );
+		if ( 'ASU' === $upper || 'ASUNCION' === $upper || 'ASUNCIÓN' === $upper || 'CAPITAL' === $upper || '00' === $state || '0' === $state || 'PY-ASU' === $upper ) {
 			return '0';
+		}
+		if ( 'CENTRAL' === $upper || '11' === $state || 'PY-11' === $upper ) {
+			return '11';
 		}
 		if ( preg_match( '/^0([1-9])$/', $state, $matches ) ) {
 			return $matches[1];
@@ -189,8 +299,7 @@ class Plugin {
 	}
 
 	/**
-	 * Asegurar que todos los 17 departamentos + Capital (código 0) estén en WooCommerce para PY.
-	 * Preserva y añade '16' (Alto Paraguay), 100% compatible con zonas PY:0, PY:11, etc.
+	 * Asegurar que todos los departamentos estén en WooCommerce para PY.
 	 *
 	 * @param array $states
 	 * @return array
@@ -208,6 +317,9 @@ class Plugin {
 		foreach ( $locations as $code => $data ) {
 			$clean_code = $this->normalize_state_code( $code );
 			$states['PY'][ $clean_code ] = $data['name'];
+			// Mapear también el nombre Dropi para que WooCommerce lo reconozca en cualquier desplegable
+			$dropi_name = $this->get_dropi_state_name( $clean_code );
+			$states['PY'][ $dropi_name ] = $data['name'];
 		}
 
 		return $states;
