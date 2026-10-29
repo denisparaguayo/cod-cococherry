@@ -5,7 +5,7 @@ Tags: woocommerce, cod, cash on delivery, dropi, paraguay, checkout
 Requires at least: 5.8
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ Pedido contra entrega en 3 pasos con ubicación primero, flete en vivo por ciuda
 Coco COD es un plugin de alto rendimiento diseñado para tiendas de WooCommerce en Paraguay y Latinoamérica que operan con pago contra entrega (COD) y dropshipping mediante Dropi.
 
 Características principales:
-* Compatibilidad nativa y sincronización fluida con Dropi Paraguay: mapeo automático de departamentos (ej. Asuncion, Central, Alto Paraná) para evitar errores de cobertura o códigos no reconocidos.
+* Compatibilidad nativa y sincronización fluida con Dropi Paraguay: mapeo automático de departamentos (ej. Asuncion, Central, Alto Parana) para evitar errores de cobertura o códigos no reconocidos.
 * Opción de Transferencia Bancaria / QR para productos de Stock Propio: el cliente puede elegir entre Efectivo Contra Entrega o Transferencia Bancaria directa con datos de cuenta (Ueno) y botón para copiar cuenta.
 * Encabezado superior en el modal con título y subtítulo tranquilizador personalizable.
 * Pantalla de Agradecimiento y Confirmación moderna: diseño premium de alta conversión con aviso del monto exacto a pagar en efectivo o datos bancarios para transferencia, tracker de estados, resumen visual y botón a WhatsApp.
@@ -40,6 +40,10 @@ Características principales:
 5. Ve a **WooCommerce > Coco COD** para configurar y gestionar actualizaciones.
 
 == Changelog ==
+
+= 1.4.5 =
+* Corregida la validación de checkout de WooCommerce en el Paso 3 del modal: se envía el código de estado nativo durante la validación del pedido para evitar el error "Facturación Departamento no es válido" y se guarda el nombre Dropi ('Asuncion', 'Central', etc.) al crear la orden.
+* Eliminación forzada de cualquier advertencia de estado mediante `woocommerce_after_checkout_validation`.
 
 = 1.4.4 =
 * Solucionado el error de sincronización de pedidos con Dropi Paraguay ("El departamento no existe o está deshabilitado... 0"): ahora se traduce y entrega automáticamente la nomenclatura oficial de departamentos de Dropi (ej. "Asuncion" en lugar del código numérico '0').

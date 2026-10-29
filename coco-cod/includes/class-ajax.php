@@ -172,7 +172,7 @@ class Ajax {
 		WC()->customer->set_billing_phone( $phone );
 		WC()->customer->set_billing_email( $email );
 		WC()->customer->set_billing_country( 'PY' );
-		WC()->customer->set_billing_state( $dropi_state );
+		WC()->customer->set_billing_state( $state );
 		WC()->customer->set_billing_city( $city );
 		WC()->customer->set_billing_postcode( $postcode );
 		WC()->customer->set_billing_address_1( $address_1 );
@@ -182,7 +182,7 @@ class Ajax {
 		WC()->customer->set_shipping_last_name( $last_name );
 		WC()->customer->set_shipping_phone( $phone );
 		WC()->customer->set_shipping_country( 'PY' );
-		WC()->customer->set_shipping_state( $dropi_state );
+		WC()->customer->set_shipping_state( $state );
 		WC()->customer->set_shipping_city( $city );
 		WC()->customer->set_shipping_postcode( $postcode );
 		WC()->customer->set_shipping_address_1( $address_1 );
@@ -225,7 +225,7 @@ class Ajax {
 		$_POST['billing_phone']                     = $phone;
 		$_POST['billing_email']                     = $email;
 		$_POST['billing_country']                   = 'PY';
-		$_POST['billing_state']                     = $dropi_state;
+		$_POST['billing_state']                     = $state;
 		$_POST['billing_city']                      = $city;
 		$_POST['billing_postcode']                  = $postcode;
 		$_POST['billing_address_1']                 = $address_1;
@@ -235,7 +235,7 @@ class Ajax {
 		$_POST['shipping_last_name']                = $last_name;
 		$_POST['shipping_phone']                    = $phone;
 		$_POST['shipping_country']                  = 'PY';
-		$_POST['shipping_state']                    = $dropi_state;
+		$_POST['shipping_state']                    = $state;
 		$_POST['shipping_city']                     = $city;
 		$_POST['shipping_postcode']                 = $postcode;
 		$_POST['shipping_address_1']                = $address_1;
@@ -248,6 +248,23 @@ class Ajax {
 		$_POST['_wpnonce']                          = $wc_nonce;
 		$_POST['terms']                             = 1;
 		$_POST['terms-field']                       = 1;
+
+		// Guardar el estado Dropi oficial una vez creada la orden
+		add_action( 'woocommerce_checkout_order_created', function ( $order ) use ( $dropi_state ) {
+			if ( $order instanceof \WC_Order ) {
+				$order->set_billing_state( $dropi_state );
+				$order->set_shipping_state( $dropi_state );
+				$order->save();
+			}
+		} );
+
+		// Remover cualquier error de validación de estado por si el tema/WooCommerce usa una lista distinta
+		add_action( 'woocommerce_after_checkout_validation', function ( $data, $errors ) {
+			if ( is_wp_error( $errors ) ) {
+				$errors->remove( 'billing_state_validation' );
+				$errors->remove( 'shipping_state_validation' );
+			}
+		}, 9999, 2 );
 
 		// Evitar que WooCommerce exija código postal durante el checkout modal
 		add_filter( 'woocommerce_checkout_fields', function ( $fields ) {
