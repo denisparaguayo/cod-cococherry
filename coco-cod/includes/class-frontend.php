@@ -19,6 +19,10 @@ class Frontend {
 
 		// Sobrescribir pantalla de agradecimiento / confirmación para pedidos COD
 		add_filter( 'wc_get_template', array( $this, 'override_thankyou_template' ), 20, 5 );
+
+		// En temas FSE (de bloques), desactivar la plantilla de bloques 'order-confirmation'
+		// para permitir que WooCommerce ejecute la plantilla PHP de agradecimiento (thankyou.php).
+		add_filter( 'woocommerce_has_block_template', array( $this, 'disable_order_confirmation_block_template' ), 10, 2 );
 	}
 
 	public function enqueue_frontend_assets() {
@@ -245,5 +249,23 @@ class Frontend {
 			}
 		}
 		return $template;
+	}
+
+	/**
+	 * Desactiva la plantilla de bloque 'order-confirmation' en temas FSE (bloques)
+	 * para permitir que WooCommerce cargue la plantilla PHP personalizada de Coco COD.
+	 *
+	 * @param bool   $has_template Si existe la plantilla de bloques.
+	 * @param string $template_name Nombre de la plantilla.
+	 * @return bool
+	 */
+	public function disable_order_confirmation_block_template( $has_template, $template_name ) {
+		if ( 'order-confirmation' === $template_name ) {
+			$plugin = Plugin::instance();
+			if ( 'yes' === $plugin->get_setting( 'custom_thankyou', 'yes' ) ) {
+				return false;
+			}
+		}
+		return $has_template;
 	}
 }

@@ -610,35 +610,36 @@
    PANTALLA DE AGRADECIMIENTO / CONFIRMACIÓN MODERNA (THANK YOU)
    ========================================================================== */
 .coco-thankyou-wrapper {
-	max-width: 760px;
-	margin: 20px auto 40px auto;
+	max-width: 820px;
+	margin: 24px auto 48px auto;
 	padding: 0 16px;
 	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 .coco-thankyou-card {
 	background: #ffffff;
 	border: 1px solid #e2e8f0;
-	border-radius: 16px;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-	padding: 36px 32px;
+	border-radius: 20px;
+	box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06);
+	padding: 40px 36px;
 	box-sizing: border-box;
 }
 
 .coco-thankyou-hero {
 	text-align: center;
-	margin-bottom: 28px;
+	margin-bottom: 30px;
 }
 
 .coco-success-circle {
-	width: 64px;
-	height: 64px;
+	width: 68px;
+	height: 68px;
 	margin: 0 auto 16px auto;
 }
 
 .coco-checkmark-icon {
-	width: 64px;
-	height: 64px;
+	width: 68px;
+	height: 68px;
 	border-radius: 50%;
 	display: block;
 	stroke-width: 2.5;
@@ -671,79 +672,122 @@
 
 @keyframes cocoScale {
 	0%, 100% { transform: none; }
-	50% { transform: scale3d(1.1, 1.1, 1); }
+	50% { transform: scale3d(1.08, 1.08, 1); }
 }
 
-.coco-order-badge {
-	display: inline-block;
-	background: #eff6ff;
-	color: #1d4ed8;
-	border: 1px solid #bfdbfe;
+.coco-order-badge-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	background: #f0fdf4;
+	color: #15803d;
+	border: 1px solid #bbf7d0;
 	font-size: 13px;
 	font-weight: 700;
-	padding: 4px 14px;
+	padding: 6px 16px;
 	border-radius: 9999px;
-	margin-bottom: 10px;
+	margin-bottom: 12px;
+}
+
+.coco-pulsing-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #16a34a;
+	display: inline-block;
+	box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+	animation: cocoPulseDot 1.8s infinite;
+}
+
+@keyframes cocoPulseDot {
+	0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+	}
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+	}
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+	}
 }
 
 .coco-thankyou-title {
-	font-size: 24px;
+	font-size: 26px;
 	font-weight: 800;
 	color: #0f172a;
 	margin: 0 0 10px 0;
-	line-height: 1.3;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
 }
 
 .coco-thankyou-lead {
 	font-size: 15px;
 	color: #64748b;
-	line-height: 1.5;
-	max-width: 580px;
+	line-height: 1.55;
+	max-width: 600px;
 	margin: 0 auto;
 }
 
 /* Aviso de pago en efectivo */
 .coco-payment-notice-box {
-	background: #ecfdf5;
-	border: 1px solid #a7f3d0;
-	border-radius: 12px;
-	padding: 16px 20px;
-	margin-bottom: 24px;
+	background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+	border: 1.5px solid #a7f3d0;
+	border-radius: 14px;
+	padding: 18px 22px;
+	margin-bottom: 26px;
 	display: flex;
 	align-items: center;
-	gap: 16px;
+	gap: 18px;
+	box-shadow: 0 2px 10px rgba(16, 185, 129, 0.08);
 }
 
-.coco-notice-icon {
-	font-size: 32px;
-	line-height: 1;
+.coco-notice-icon-svg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 12px;
+	background: #d1fae5;
+	color: #059669;
+	flex-shrink: 0;
+}
+
+.coco-notice-content {
+	flex-grow: 1;
 }
 
 .coco-notice-tag {
-	display: block;
+	display: inline-block;
 	font-size: 11px;
 	font-weight: 800;
 	color: #047857;
-	letter-spacing: 0.5px;
+	letter-spacing: 0.6px;
+	text-transform: uppercase;
 }
 
 .coco-notice-total {
 	font-size: 16px;
 	color: #065f46;
-	margin-top: 2px;
+	margin-top: 3px;
+	font-weight: 600;
 }
 
 .coco-total-highlight {
-	font-size: 20px;
+	font-size: 22px;
 	font-weight: 800;
 	color: #065f46;
-	margin-left: 4px;
+	margin-left: 6px;
 }
 
 .coco-notice-tip {
 	font-size: 13px;
 	color: #047857;
 	margin: 4px 0 0 0;
+	line-height: 1.4;
 }
 
 /* Tracker de progreso */
@@ -753,8 +797,8 @@
 	justify-content: space-between;
 	background: #f8fafc;
 	border: 1px solid #e2e8f0;
-	border-radius: 12px;
-	padding: 16px 20px;
+	border-radius: 14px;
+	padding: 16px 24px;
 	margin-bottom: 28px;
 }
 
@@ -762,36 +806,42 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 6px;
+	gap: 7px;
 	text-align: center;
+	position: relative;
+	z-index: 1;
 }
 
 .coco-tracker-dot {
-	width: 32px;
-	height: 32px;
+	width: 34px;
+	height: 34px;
 	border-radius: 50%;
-	background: #e2e8f0;
+	background: #ffffff;
+	border: 2px solid #cbd5e1;
 	color: #64748b;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 13px;
 	font-weight: 700;
+	transition: all 0.2s ease;
 }
 
 .coco-tracker-step.completed .coco-tracker-dot {
 	background: #16a34a;
+	border-color: #16a34a;
 	color: #ffffff;
 }
 
 .coco-tracker-step.current .coco-tracker-dot {
 	background: #eff6ff;
-	border: 2px solid #2563eb;
+	border-color: #2563eb;
 	color: #2563eb;
+	box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
 }
 
 .coco-tracker-text {
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: 600;
 	color: #64748b;
 }
@@ -804,10 +854,11 @@
 
 .coco-tracker-line {
 	flex-grow: 1;
-	height: 2px;
+	height: 3px;
 	background: #e2e8f0;
-	margin: 0 10px;
-	margin-top: -18px;
+	margin: 0 12px;
+	margin-top: -20px;
+	border-radius: 2px;
 }
 
 .coco-tracker-line.active {
@@ -825,54 +876,72 @@
 .coco-section-card {
 	background: #f8fafc;
 	border: 1px solid #e2e8f0;
-	border-radius: 12px;
-	padding: 20px;
+	border-radius: 14px;
+	padding: 22px;
+	display: flex;
+	flex-direction: column;
 }
 
 .coco-card-heading {
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: 700;
-	color: #1e293b;
-	margin: 0 0 14px 0;
+	color: #0f172a;
+	margin: 0 0 16px 0;
 	display: flex;
 	align-items: center;
-	gap: 8px;
+	gap: 10px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #e2e8f0;
 }
 
-.coco-heading-icon {
-	font-size: 16px;
+.coco-heading-icon-svg {
+	display: flex;
+	align-items: center;
+	color: var(--coco-btn-bg, #16a34a);
 }
 
 .coco-info-list {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
+	gap: 12px;
 }
 
 .coco-info-item {
 	display: flex;
 	flex-direction: column;
-	gap: 2px;
-	font-size: 13px;
+	gap: 3px;
+	font-size: 13.5px;
 }
 
 .coco-info-label {
 	font-size: 11px;
 	color: #64748b;
-	font-weight: 600;
+	font-weight: 700;
 	text-transform: uppercase;
+	letter-spacing: 0.5px;
 }
 
 .coco-info-val {
 	color: #1e293b;
 	word-break: break-word;
+	line-height: 1.4;
+}
+
+.coco-phone-link {
+	color: #1e293b;
+	text-decoration: none;
+}
+
+.coco-phone-link:hover {
+	color: #16a34a;
+	text-decoration: underline;
 }
 
 .coco-ref-item {
-	background: #fefce8;
+	background: #fffbeb;
 	border: 1px solid #fef08a;
-	padding: 8px 10px;
-	border-radius: 6px;
+	padding: 10px 12px;
+	border-radius: 8px;
 }
 
 /* Items */
@@ -881,34 +950,66 @@
 	flex-direction: column;
 	gap: 12px;
 	margin-bottom: 16px;
+	flex-grow: 1;
 }
 
 .coco-thankyou-item {
 	display: flex;
 	align-items: center;
 	gap: 12px;
-	padding-bottom: 10px;
+	padding-bottom: 12px;
 	border-bottom: 1px solid #edf2f7;
 }
 
+.coco-item-thumb {
+	position: relative;
+	width: 52px;
+	height: 52px;
+	flex-shrink: 0;
+}
+
 .coco-item-thumb img {
-	width: 48px;
-	height: 48px;
+	width: 52px;
+	height: 52px;
 	object-fit: cover;
-	border-radius: 6px;
+	border-radius: 8px;
 	border: 1px solid #e2e8f0;
+	display: block;
+}
+
+.coco-item-qty-pill {
+	position: absolute;
+	top: -6px;
+	right: -6px;
+	background: #1e293b;
+	color: #ffffff;
+	font-size: 10px;
+	font-weight: 700;
+	min-width: 18px;
+	height: 18px;
+	border-radius: 9px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .coco-item-details {
 	flex-grow: 1;
+	min-width: 0;
 }
 
 .coco-item-title {
-	font-size: 13px;
+	font-size: 13.5px;
 	font-weight: 600;
 	color: #1e293b;
 	margin: 0 0 2px 0;
-	line-height: 1.3;
+	line-height: 1.35;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 .coco-item-meta {
@@ -917,39 +1018,50 @@
 }
 
 .coco-item-price {
-	font-size: 13px;
+	font-size: 14px;
 	font-weight: 700;
 	color: #0f172a;
 	white-space: nowrap;
 }
 
 .coco-totals-breakdown {
-	border-top: 1px solid #edf2f7;
-	padding-top: 10px;
+	border-top: 1px solid #e2e8f0;
+	padding-top: 12px;
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
+	gap: 8px;
 }
 
 .coco-breakdown-row {
 	display: flex;
 	justify-content: space-between;
-	font-size: 13px;
+	align-items: center;
+	font-size: 13.5px;
 	color: #64748b;
 }
 
+.coco-shipping-free-tag {
+	color: #16a34a;
+	font-weight: 700;
+	background: #dcfce7;
+	padding: 2px 8px;
+	border-radius: 4px;
+	font-size: 12px;
+}
+
 .coco-grand-total {
-	font-size: 15px;
+	font-size: 15.5px;
 	font-weight: 800;
 	color: #0f172a;
-	border-top: 1px dashed #cbd5e1;
-	padding-top: 8px;
+	border-top: 1.5px dashed #cbd5e1;
+	padding-top: 10px;
 	margin-top: 4px;
 }
 
 .coco-total-price {
 	color: var(--coco-btn-bg, #16a34a);
-	font-size: 17px;
+	font-size: 19px;
+	font-weight: 800;
 }
 
 /* Acciones finales */
@@ -957,7 +1069,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 12px;
+	gap: 14px;
+	margin-top: 10px;
 }
 
 .coco-btn-whatsapp {
@@ -968,29 +1081,62 @@
 	background: #25d366;
 	color: #ffffff !important;
 	text-decoration: none !important;
-	padding: 14px 28px;
-	border-radius: 10px;
-	font-size: 15px;
+	padding: 15px 30px;
+	border-radius: 12px;
+	font-size: 16px;
 	font-weight: 700;
 	width: 100%;
-	max-width: 440px;
-	box-shadow: 0 4px 14px rgba(37, 211, 102, 0.25);
-	transition: background 0.15s, transform 0.15s;
+	max-width: 480px;
+	box-shadow: 0 4px 18px rgba(37, 211, 102, 0.35);
+	transition: all 0.2s ease;
 	text-align: center;
 }
 
 .coco-btn-whatsapp:hover {
 	background: #1eb857;
-	transform: translateY(-1px);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 22px rgba(37, 211, 102, 0.45);
 	color: #ffffff !important;
+}
+
+.coco-btn-wa-svg {
+	flex-shrink: 0;
+}
+
+.coco-secondary-actions {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.coco-btn-print {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	background: #f1f5f9;
+	color: #475569;
+	border: 1px solid #cbd5e1;
+	padding: 8px 16px;
+	border-radius: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.15s;
+}
+
+.coco-btn-print:hover {
+	background: #e2e8f0;
+	color: #0f172a;
 }
 
 .coco-btn-return {
 	color: #64748b;
 	text-decoration: none;
-	font-size: 14px;
+	font-size: 13.5px;
 	font-weight: 600;
-	padding: 8px 16px;
+	padding: 8px 12px;
 	transition: color 0.15s;
 }
 
@@ -998,13 +1144,202 @@
 	color: #0f172a;
 }
 
+/* Banner de garantía al pie */
+.coco-guarantee-footer {
+	margin-top: 32px;
+	padding-top: 20px;
+	border-top: 1px solid #f1f5f9;
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	color: #64748b;
+	font-size: 12.5px;
+	line-height: 1.45;
+}
+
+.coco-guarantee-icon {
+	color: #16a34a;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.coco-guarantee-text strong {
+	display: block;
+	color: #0f172a;
+	font-size: 13px;
+	margin-bottom: 2px;
+}
+
+/* Tarjeta de Transferencia Bancaria Fintech */
+.coco-bank-transfer-box {
+	background: #f8fafc;
+	border: 1.5px solid #cbd5e1;
+	border-radius: 14px;
+	padding: 20px;
+	margin-bottom: 26px;
+}
+
+.coco-bank-header {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-bottom: 16px;
+}
+
+.coco-bank-icon-svg {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 10px;
+	background: #eff6ff;
+	color: #2563eb;
+	flex-shrink: 0;
+}
+
+.coco-bank-badge {
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 800;
+	color: #1d4ed8;
+	letter-spacing: 0.5px;
+	margin-bottom: 2px;
+}
+
+.coco-bank-title {
+	font-size: 15px;
+	font-weight: 700;
+	color: #0f172a;
+	margin: 0;
+}
+
+.coco-bank-table-card {
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	padding: 12px 16px;
+	margin-bottom: 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.coco-bt-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 13.5px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #f1f5f9;
+}
+
+.coco-bt-row:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.coco-bt-label {
+	color: #64748b;
+	font-size: 12.5px;
+}
+
+.coco-bt-value {
+	color: #0f172a;
+	font-weight: 600;
+	text-align: right;
+}
+
+.coco-bt-value.highlight {
+	color: #2563eb;
+	font-weight: 800;
+}
+
+.coco-acc-copy-box {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.coco-copy-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	background: #f1f5f9;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 700;
+	color: #334155;
+	cursor: pointer;
+	transition: all 0.15s;
+}
+
+.coco-copy-btn:hover {
+	background: #e2e8f0;
+	color: #0f172a;
+}
+
+.coco-copy-btn.copied {
+	background: #dcfce7;
+	border-color: #86efac;
+	color: #15803d;
+}
+
+.coco-transfer-amount {
+	color: #16a34a;
+	font-size: 18px;
+	font-weight: 800;
+}
+
+.coco-bank-wa-alert {
+	background: #fffbeb;
+	border: 1px solid #fef08a;
+	border-radius: 8px;
+	padding: 12px 14px;
+	font-size: 13px;
+	color: #713f12;
+	line-height: 1.45;
+}
+
+.coco-bank-wa-alert p {
+	margin: 0;
+}
+
+/* Responsive móvil */
 @media (max-width: 700px) {
 	.coco-thankyou-card {
-		padding: 24px 16px;
+		padding: 26px 16px;
+		border-radius: 16px;
+	}
+
+	.coco-thankyou-title {
+		font-size: 22px;
 	}
 
 	.coco-thankyou-grid {
 		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.coco-payment-notice-box {
+		padding: 16px;
+		gap: 12px;
+	}
+
+	.coco-notice-icon-svg {
+		width: 40px;
+		height: 40px;
+	}
+
+	.coco-total-highlight {
+		font-size: 20px;
+		display: block;
+		margin-left: 0;
+		margin-top: 2px;
 	}
 
 	.coco-steps-tracker {
@@ -1012,13 +1347,56 @@
 	}
 
 	.coco-tracker-text {
-		font-size: 9px;
+		font-size: 9.5px;
 	}
 
 	.coco-tracker-dot {
-		width: 26px;
-		height: 26px;
+		width: 28px;
+		height: 28px;
 		font-size: 11px;
+	}
+
+	.coco-btn-whatsapp {
+		font-size: 15px;
+		padding: 14px 20px;
+	}
+
+	.coco-bt-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+
+	.coco-bt-value {
+		text-align: left;
+	}
+
+	.coco-acc-copy-box {
+		width: 100%;
+		justify-content: space-between;
+	}
+}
+
+/* Estilos de Impresión (@media print) */
+@media print {
+	header, footer, nav, .coco-thankyou-actions, .coco-guarantee-footer, .wp-block-template-part {
+		display: none !important;
+	}
+
+	body, .coco-thankyou-wrapper {
+		margin: 0 !important;
+		padding: 0 !important;
+		background: #ffffff !important;
+	}
+
+	.coco-thankyou-card {
+		border: 1px solid #ccc !important;
+		box-shadow: none !important;
+		padding: 20px !important;
+	}
+
+	.coco-btn-whatsapp, .coco-secondary-actions {
+		display: none !important;
 	}
 }
 
