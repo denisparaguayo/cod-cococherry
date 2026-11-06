@@ -9,6 +9,18 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! $order instanceof \WC_Order ) {
+	global $wp;
+	$order_id_fallback  = isset( $wp->query_vars['order-received'] ) ? absint( $wp->query_vars['order-received'] ) : ( isset( $_GET['order'] ) ? absint( $_GET['order'] ) : 0 );
+	$order_key_fallback = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : '';
+	if ( $order_id_fallback > 0 ) {
+		$candidate = wc_get_order( $order_id_fallback );
+		if ( $candidate && ( empty( $order_key_fallback ) || hash_equals( $candidate->get_order_key(), $order_key_fallback ) ) ) {
+			$order = $candidate;
+		}
+	}
+}
+
+if ( ! $order instanceof \WC_Order ) {
 	return;
 }
 

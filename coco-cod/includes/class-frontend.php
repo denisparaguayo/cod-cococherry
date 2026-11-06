@@ -23,6 +23,10 @@ class Frontend {
 		// En temas FSE (de bloques), desactivar la plantilla de bloques 'order-confirmation'
 		// para permitir que WooCommerce ejecute la plantilla PHP de agradecimiento (thankyou.php).
 		add_filter( 'woocommerce_has_block_template', array( $this, 'disable_order_confirmation_block_template' ), 10, 2 );
+
+		// Permitir que el comprador contra entrega vea su comprobante sin forzar inicio de sesión
+		add_filter( 'woocommerce_order_received_verify_known_shoppers', '__return_false', 999 );
+		add_filter( 'woocommerce_order_email_verification_required', '__return_false', 999 );
 	}
 
 	public function enqueue_frontend_assets() {
@@ -232,9 +236,21 @@ class Frontend {
 	 * Sobrescribe la plantilla de agradecimiento / pedido recibido para pedidos contra entrega.
 	 */
 	public function override_thankyou_template( $template, $template_name, $args, $template_path, $default_path ) {
-		if ( 'checkout/thankyou.php' === $template_name && ! empty( $args['order'] ) ) {
-			$order = $args['order'];
-			if ( is_numeric( $order ) ) {
+		if ( 'checkout/thankyou.php' === $template_name ) {
+			$order = ! empty( $args['order'] ) ? $args['order'] : false;
+
+			// Si WooCommerce restringió la orden por verificación de email o sesión, recuperarla de forma segura con la clave
+			if ( ! $order ) {
+				global $wp;
+				$order_id  = isset( $wp->query_vars['order-received'] ) ? absint( $wp->query_vars['order-received'] ) : ( isset( $_GET['order'] ) ? absint( $_GET['order'] ) : 0 );
+				$order_key = isset( $_GET['key'] ) ? wc_clean( wp_unslash( $_GET['key'] ) ) : '';
+				if ( $order_id > 0 ) {
+					$order_candidate = wc_get_order( $order_id );
+					if ( $order_candidate && ( empty( $order_key ) || hash_equals( $order_candidate->get_order_key(), $order_key ) ) ) {
+						$order = $order_candidate;
+					}
+				}
+			} elseif ( is_numeric( $order ) ) {
 				$order = wc_get_order( $order );
 			}
 
